@@ -1,3 +1,3 @@
+Spendthrift
 
-
-A free expense tracking app with dropbox datastore api
+A free expense tracking app with google spreadsheets api
