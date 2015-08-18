@@ -5,7 +5,7 @@ body {
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
     text-align: center;
-    color: #fff;
+    color: #333;
     background: url(../images/bg2.jpg) no-repeat bottom center fixed;
     background-color: #000;
     -webkit-background-size: cover;
@@ -64,7 +64,7 @@ p {
 }
  .brand {
         display: inherit;
-        margin-top: 5%;
+        /*margin-top: 5%;*/
         
         padding: 30px 0 10px;
         text-align: center;
@@ -73,7 +73,7 @@ p {
         font-size: 5em;
         font-weight: 700;
         line-height: normal;
-        color: #fff;
+        color: #333;
     }
         .address-bar {
         display: inherit;
@@ -85,7 +85,10 @@ p {
         font-size: 1.25em;
         font-weight: 400;
         letter-spacing: 3px;
-        color: #fff;
+        color: #333;
+    }
+    .navbar-toggle  .icon-bar{
+        background-color: white !important;
     }
 
 
@@ -94,7 +97,7 @@ p {
 @media screen and (min-width:768px) {
     .brand {
         display: inherit;
-        margin-top: 5%;
+        /*margin-top: 5%;*/
         
         padding: 30px 0 10px;
         text-align: center;
@@ -103,7 +106,7 @@ p {
         font-size: 5em;
         font-weight: 700;
         line-height: normal;
-        color: #fff;
+        color: #333;
     }
         .address-bar {
         display: inherit;
@@ -115,7 +118,7 @@ p {
         font-size: 1.25em;
         font-weight: 400;
         letter-spacing: 3px;
-        color: #fff;
+        color: #333;
     }
 
 
@@ -127,6 +130,7 @@ p {
         float: left;
         margin-right: 25px;
     }
+    
 
    
 }
@@ -142,7 +146,7 @@ p {
 
 
 .navbar-custom {
-    margin-bottom: 0;
+    margin-bottom: 5%;
     border-bottom: 1px solid rgba(255,255,255,.3);
     text-transform: uppercase;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -207,7 +211,11 @@ p {
         padding: 20px 0;
         border-bottom: 0;
         letter-spacing: 1px;
+
         background: 0 0;
+        margin-bottom: 5%;
+       background-color:rgba(0, 0, 0, 0.5);
+       
         -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
         -moz-transition: background .5s ease-in-out,padding .5s ease-in-out;
         transition: background .5s ease-in-out,padding .5s ease-in-out;
@@ -217,6 +225,10 @@ p {
         padding: 0;
         border-bottom: 1px solid rgba(255,255,255,.3);
         background: #000;
+    }
+    .box-carousal{
+        padding-top: 0px !important;
+        margin-top:10%;
     }
 }
 .customHeader{
