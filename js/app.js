@@ -11,8 +11,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		$routeProvider
 
 		.when('/',{
-			templateUrl : 'welcome.html',
-			controller : 'welcomeController'
+			
 		})
 
 		// route for the categories page
