@@ -261,6 +261,9 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 
 		});
 
+		$('.side-nav>li>a').click(function(event){
+			 $('ul .in').collapse("hide");	
+		});
 		});
 		/*----------------------------------------------------------*/
 		app.controller('showCategoriesController', function($scope,$log){
@@ -767,6 +770,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 
 
 
+
 		//Show Chart
 		$('#tagChart').highcharts({
 			chart: {
@@ -795,6 +799,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 				data: chartYValues
 			}]
 		});
+
 
 	});
 
@@ -1482,4 +1487,6 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 			];
 		});
 		/*----------------------------------------------------------*/
+
+
 })();
