@@ -11,7 +11,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		$routeProvider
 
 		.when('/',{
-			
+
 		})
 
 		// route for the categories page
@@ -197,74 +197,150 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 
 	});
 
-	//Dropbox Intialization is done here
+	//Google Intialization is done here
 	app.run(function($rootScope) {
 
-		var APP_KEY = 'iiz72ijenjkeuw9';
-		var client = $rootScope.myClient = new Dropbox.Client({key: APP_KEY});
+		var CLIENT_ID = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
+		var SCOPES = 'https://www.googleapis.com/auth/drive';
+		var MAIN_APP_FOLDER_ID = 0;
+		$rootScope.isGoogleAuthenticated = false;
 
-		$rootScope.isClientAuthenticated = false;
+		/**
+		 * Called when the client library is loaded to start the auth flow.
+		 */
+		$rootScope.handleClientLoad = function() {
+			window.setTimeout($rootScope.checkAuth, 1);
+		};
 
-		// Try to finish OAuth authorization.
-		client.authenticate({interactive: false}, function (error) {
-			if (error) {
-				alert('Authentication error: ' + error);
+		/**
+		 * Check if the current user has authorized the application.
+		 */
+		$rootScope.checkAuth  = function() {
+			gapi.auth.authorize(
+				{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+				$rootScope.handleAuthResult);
+		};
+
+		/**
+		 * Called when authorization server replies.
+		 *
+		 * @param {Object} authResult Authorization result.
+		 */
+		$rootScope.handleAuthResult = function(authResult){
+			var authButton = document.getElementById('connectGoogle');
+			authButton.style.display = 'none';
+			if (authResult && !authResult.error) {
+				// Access token has been successfully retrieved, requests can be sent to the API.
+				$rootScope.isGoogleAuthenticated = true;
+				$rootScope.handleInitialFlow();
+			} else {
+				// No access token could be retrieved, show the button to start the authorization flow.
+				authButton.style.display = 'block';
+				authButton.onclick = function () {
+					gapi.auth.authorize(
+						{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+						$rootScope.handleAuthResult);
+				};
 			}
+		};
 
-		});
+		$rootScope.handleInitialFlow = function() {
+			var isSpendThriftFolderCreated = $rootScope.hasSpendThriftFolder();
+			console.log(isSpendThriftFolderCreated);
+			if (!isSpendThriftFolderCreated) {
+				var isFolderCreated = $rootScope.createNewFolder();
+			}
+			//selectSpendThriftFolder();
 
 
-
-		$rootScope.getUser = function(){
-			client.getAccountInfo(function (error, info) {
-				$rootScope.user = info.name;
-				$rootScope.$apply();
-			});
-			var datastoreManager = client.getDatastoreManager();
-			datastoreManager.openDefaultDatastore(function (error, defaultDatastore) {
-				if (error) {
-					alert('Error opening default datastore: ' + error);
-				}
-
-				// Now you have a datastore. The next few examples can be included here.
-				$rootScope.datastore = defaultDatastore;
-				$rootScope.$apply();
-			});
 		};
 
 
+		//Get folder id of spendthrift folder
+		$rootScope.getFolderId = function () {
+			gapi.client.load('drive', 'v2', function () {
+				var request = gapi.client.drive.files.list({
+					'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+				});
+				request.execute(function (resp) {
+					console.log(resp.items.length);
+					if (resp.items.length > 0) {
+						MAIN_APP_FOLDER_ID = resp.items[0].id;
+					}
+					console.log(MAIN_APP_FOLDER_ID);
+				});
+			});
+		};
 
+		$rootScope.createNewFile = function () {
+			console.log("In Create new file")
+			console.log(MAIN_APP_FOLDER_ID);
+			gapi.client.load('drive', 'v2', function () {
+				var request = gapi.client.request({
+					'path': '/drive/v2/files',
+					'method': 'POST',
+					'body': {
+						"title": "MyBudget",
+						"parents": [{"id": MAIN_APP_FOLDER_ID}],
+						"mimeType": "application/vnd.google-apps.spreadsheet"
+					}
+				});
+				request.execute(function (resp) {
+					console.log(resp);
+				});
+			});
+		};
 
+		$rootScope.createNewFolder = function () {
+			console.log("In Create new folder")
+			gapi.client.load('drive', 'v2', function () {
+				var request = gapi.client.request({
+					'path': '/drive/v2/files',
+					'method': 'POST',
+					'body': {
+						"title": "SpendThriftData",
+						"mimeType": "application/vnd.google-apps.folder"
+					}
+				});
+				request.execute(function (resp) {
+					console.log(resp);
+				});
+			});
+			return true;
+		};
 
+		$rootScope.hasSpendThriftFolder = function () {
+			var hasSpendThriftFolder = false;
+			console.log("In hasSpendThriftFolder");
+			gapi.client.load('drive', 'v2', function() {
+				var request = gapi.client.drive.files.list({
+					'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+				});
 
+				request.execute(function(resp) {
+					console.log("In hasSpendThriftFolder");
+					if(resp.items.length > 0){
+						console.log("In hasSpendThriftFolder"+resp.items.length > 0);
+						hasSpendThriftFolder = true;
+					}
+				});
+			});
+			return hasSpendThriftFolder;
+		};
 
-		if(client.isAuthenticated()){
-			console.log("First check client is Authenticated::");
-			console.log(client.isAuthenticated());
-			$rootScope.isClientAuthenticated = true;
-
-			$rootScope.getUser();
-
-
-
-		}
-
-		// Authenticate when the user clicks the connect button.
-		$('#connectDropbox').click(function (e) {
+		// Authenticate when the user clicks the login button.
+		$('#connectGoogle').click(function (e) {
 			e.preventDefault();
-			client.authenticate();
-			console.log("Client.autenticate called when connect to dropbox is clicked");
-			if(client.isAuthenticated()){
-				$rootScope.isClientAuthenticated = true;
-				$rootScope.getUser();
-			}
-
+			$rootScope.handleClientLoad();
+			console.log("connect google clicked");
 		});
+
 
 		$('.side-nav>li>a').click(function(event){
 			 $('ul .in').collapse("hide");	
 		});
-		});
+	});
+
 		/*----------------------------------------------------------*/
 		app.controller('showCategoriesController', function($scope,$log){
 
