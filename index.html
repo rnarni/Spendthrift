@@ -79,7 +79,6 @@
                 <!-- navigation start-->
                 <div id="wrapper">
                         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                            <button type="button" id="connectGoogle">Connect</button>
                             <!-- Brand and toggle get grouped for better mobile display -->
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -91,11 +90,16 @@
                                 <a class="navbar-brand" href="index.html">SpendThrift</a>
                             </div>
                             <!-- Top Menu Items -->
+                            <ul class="nav navbar-right top-nav">
+                                <li>
+                                     <button type="button" class="loginButton"id="connectGoogle">Login<i class="fa fa-user"></i></button>
+                                </li>
+                            </ul>
                             <!-- Top Menu removed-->
 
                             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                             <div  class="collapse navbar-collapse navbar-ex1-collapse">
-                                <ul ng-hide="false"  class="nav navbar-nav side-nav">
+                                <ul ng-show={{isGoogleAuthenticated}}  class="nav navbar-nav side-nav">
                                     <li class="active">
                                         <a href="#" id="home"><i class="fa fa-fw fa-dashboard"></i> Home</a>
                                     </li>
@@ -161,7 +165,7 @@
                 <!-- navigation end-->
 
                 <!--Welcome page-->
-                <div ng-hide="true" class="container">
+                <div ng-hide={{isGoogleAuthenticated}} class="container">
 
                     <div class="row">
                         <div class="box box-carousal">
@@ -218,7 +222,7 @@
 
 
                 <!--page wrapper-->
-                <div id="page-wrapper">
+                <div id="page-wrapper" ng-show={{isGoogleAuthenticated}}>
 
                             <div class="container-fluid">
                            
