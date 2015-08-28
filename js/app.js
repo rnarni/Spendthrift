@@ -308,9 +308,8 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 			});
 			return true;
 		};
-
-		$rootScope.hasSpendThriftFolder = function () {
-			var hasSpendThriftFolder = false;
+		$rootScope.hasSpendThriftFolder = false;
+		$rootScope.hasSpendThriftFolder = function ($rootScope) {
 			console.log("In hasSpendThriftFolder");
 			gapi.client.load('drive', 'v2', function() {
 				var request = gapi.client.drive.files.list({
@@ -321,11 +320,11 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 					console.log("In hasSpendThriftFolder");
 					if(resp.items.length > 0){
 						console.log("In hasSpendThriftFolder"+resp.items.length > 0);
-						hasSpendThriftFolder = true;
+						$rootScope.hasSpendThriftFolder = true;
 					}
 				});
 			});
-			return hasSpendThriftFolder;
+			return $rootScope.hasSpendThriftFolder;
 		};
 
 		// Authenticate when the user clicks the login button.
