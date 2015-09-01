@@ -16,11 +16,11 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 
 		// route for the categories page
 		.when('/addCategories', {
-			templateUrl : 'addCategories.html'
+			templateUrl : 'templates/addCategories.html'
 		})
 
 		.when('/addExpense', {
-			templateUrl : 'addExpense.html',
+			templateUrl : 'templates/addExpense.html',
 			controller: 'addExpenseController',
 			resolve: {
 				app: function($q, $timeout) {
@@ -34,7 +34,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		})
 
 		.when('/showCategories', {
-			templateUrl : 'showCategories.html',
+			templateUrl : 'templates/showCategories.html',
 			controller: 'showCategoriesController',
 			resolve: {
 				app: function($q, $timeout) {
@@ -48,7 +48,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		})
 
 		.when('/showGraphs', {
-			templateUrl : 'showGraphs.html',
+			templateUrl : 'templates/showGraphs.html',
 			controller: 'showGraphsController',
 			resolve: {
 				app: function($q, $timeout) {
@@ -62,7 +62,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		})
 
 			.when('/showGraphsByCategories', {
-				templateUrl : 'showGraphsByCategories.html',
+				templateUrl : 'templates/showGraphsByCategories.html',
 				controller: 'showGraphsByCategoriesCtrl',
 				resolve: {
 					app: function($q, $timeout) {
@@ -76,7 +76,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 			})
 
 			.when('/showGraphsByTags', {
-				templateUrl : 'showGraphsByTags.html',
+				templateUrl : 'templates/showGraphsByTags.html',
 				controller: 'showGraphsByTagsCtrl',
 				resolve: {
 					app: function($q, $timeout) {
@@ -90,7 +90,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 			})
 
 		.when('/showExpenses', {
-			templateUrl : 'showExpenses.html',
+			templateUrl : 'templates/showExpenses.html',
 			controller: 'showExpensesController',
 			resolve: {
 				app: function($q, $timeout) {
@@ -104,7 +104,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		})
 
 		.when('/showExpensesByCategory', {
-			templateUrl : 'showExpensesByCategory.html',
+			templateUrl : 'templates/showExpensesByCategory.html',
 			controller: 'showExpensesByCategoryController',
 			resolve: {
 				app: function($q, $timeout) {
@@ -118,7 +118,7 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		})
 
 			.when('/showExpensesByTags', {
-				templateUrl : 'showExpensesByTags.html',
+				templateUrl : 'templates/showExpensesByTags.html',
 				controller: 'showExpensesByTagsController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -203,8 +203,8 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		var CLIENT_ID = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
 		var SCOPES = 'https://www.googleapis.com/auth/drive';
 		var MAIN_APP_FOLDER_ID = 0;
-		$rootScope.isGoogleAuthenticated = false;
-
+		var isAuthenticated
+		$rootScope.isGoogleAuthenticated=true;
 		/**
 		 * Called when the client library is loaded to start the auth flow.
 		 */
@@ -232,10 +232,13 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 			if (authResult && !authResult.error) {
 				// Access token has been successfully retrieved, requests can be sent to the API.
 				$rootScope.isGoogleAuthenticated = true;
+				console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
 				$rootScope.handleInitialFlow();
 			} else {
 				// No access token could be retrieved, show the button to start the authorization flow.
 				authButton.style.display = 'block';
+				$rootScope.isGoogleAuthenticated = false;
+				console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
 				authButton.onclick = function () {
 					gapi.auth.authorize(
 						{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
@@ -333,11 +336,15 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 			$rootScope.handleClientLoad();
 			console.log("connect google clicked");
 		});
-
+		window.onload=function(){
+			window.setTimeout($rootScope.handleClientLoad, 1);
+		}
+		
 
 		$('.side-nav>li>a').click(function(event){
 			 $('ul .in').collapse("hide");	
 		});
+
 	});
 
 		/*----------------------------------------------------------*/
@@ -557,15 +564,15 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 		$scope.tagCloud = [];
 
 
-		var allTags = $scope.datastore.getTable('tags').query();
-		for (var i=0; i < allTags.length; i++) {
-			$scope.tags.push(allTags[i].get('name'));
-			var tagCloudObject = {};
-			tagCloudObject.text = allTags[i].get('name');
-			tagCloudObject.weight = 10;
-			$scope.tagCloud.push(tagCloudObject);
+		// var allTags = $scope.datastore.getTable('tags').query();
+		// for (var i=0; i < allTags.length; i++) {
+		// 	$scope.tags.push(allTags[i].get('name'));
+		// 	var tagCloudObject = {};
+		// 	tagCloudObject.text = allTags[i].get('name');
+		// 	tagCloudObject.weight = 10;
+		// 	$scope.tagCloud.push(tagCloudObject);
 
-		}
+		// }
 		$('#tagCloud').jQCloud($scope.tagCloud, {
 			width: 500,
 			height: 350
@@ -981,6 +988,8 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 
 		});
 
+
+		
 		/*----------------------------------------------------------*/
 		app.controller('addCategoriesController', function($scope,$timeout) {
 			$scope.iconName = "";
