@@ -1,166 +1,97 @@
 (function(){
-var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAnimate']);
+var app = angular.module('syncBudget',['ui.router',
+    'angular-google-gapi','ui.bootstrap','ngTouch','ngAnimate']);
 
 
-
-	//Routing Configuration
-
-	app.config(function($routeProvider) {
+	app.config(['$stateProvider','$urlRouterProvider',
+        function($stateProvider) {
 
 
-		$routeProvider
+            $stateProvider
 
-		.when('/',{
+                .state('addCategories', {
+                    url :'/addCategories',
+                    views :  {
+                        '': {
+                            templateUrl: 'templates/addCategories.html'
+                        },
+                    },
+                })
 
-		})
+                .state('addExpense', {
+                    url :'/addExpense',
+                    templateUrl: 'templates/addExpense.html',
+                    controller: 'addExpenseController'
+                })
 
-		// route for the categories page
-		.when('/addCategories', {
-			templateUrl : 'templates/addCategories.html'
-		})
+                .state('showCategories', {
+                    url :'/showCategories',
+                    templateUrl: 'templates/showCategories.html',
+                    controller: 'showCategoriesController'
+                })
 
-		.when('/addExpense', {
-			templateUrl : 'templates/addExpense.html',
-			controller: 'addExpenseController',
-			resolve: {
-				app: function($q, $timeout) {
-					var defer = $q.defer();
-					$timeout(function(){
-						defer.resolve();
-					},2000);
-					return defer.promise;
-				}
-			}
-		})
+                .state('showGraphs', {
+                    url :'/showGraphs',
+                    templateUrl: 'templates/showGraphs.html',
+                    controller: 'showGraphsController'
+                           
+                })
 
-		.when('/showCategories', {
-			templateUrl : 'templates/showCategories.html',
-			controller: 'showCategoriesController',
-			resolve: {
-				app: function($q, $timeout) {
-					var defer = $q.defer();
-					$timeout(function(){
-						defer.resolve();
-					},3000);
-					return defer.promise;
-				}
-			}
-		})
+                .state('showExpensesByCategory', {
+                    url :'/showGraphsByCategories',
+                    templateUrl: 'templates/showGraphsByCategories.html',
+                    controller: 'showGraphsByCategoriesCtrl'
+                           
+                        
+                })
 
-		.when('/showGraphs', {
-			templateUrl : 'templates/showGraphs.html',
-			controller: 'showGraphsController',
-			resolve: {
-				app: function($q, $timeout) {
-					var defer = $q.defer();
-					$timeout(function(){
-						defer.resolve();
-					},3000);
-					return defer.promise;
-				}
-			}
-		})
+                 .state('showGraphsByTags', {
+                    url :'/showGraphsByTags',
+                    templateUrl: 'templates/showGraphsByTags.html',
+                    controller: 'showGraphsByTagsCtrl'
+                            
+                })
 
-			.when('/showGraphsByCategories', {
-				templateUrl : 'templates/showGraphsByCategories.html',
-				controller: 'showGraphsByCategoriesCtrl',
-				resolve: {
-					app: function($q, $timeout) {
-						var defer = $q.defer();
-						$timeout(function(){
-							defer.resolve();
-						},3000);
-						return defer.promise;
-					}
-				}
-			})
+                .state('showExpenses', {
+                    url :'/showExpenses',
+                    templateUrl: 'templates/showExpenses.html',
+                    controller: 'showExpensesController'
+                                  
+                })
 
-			.when('/showGraphsByTags', {
-				templateUrl : 'templates/showGraphsByTags.html',
-				controller: 'showGraphsByTagsCtrl',
-				resolve: {
-					app: function($q, $timeout) {
-						var defer = $q.defer();
-						$timeout(function(){
-							defer.resolve();
-						},3000);
-						return defer.promise;
-					}
-				}
-			})
+                 .state('showExpensesByTags', {
+                    url :'/showExpensesByTags',
+                    templateUrl: 'templates/showExpensesByTags.html',
+                    controller: 'showExpensesByTagsController'
+                           
+                })
 
-		.when('/showExpenses', {
-			templateUrl : 'templates/showExpenses.html',
-			controller: 'showExpensesController',
-			resolve: {
-				app: function($q, $timeout) {
-					var defer = $q.defer();
-					$timeout(function(){
-						defer.resolve();
-					},3000);
-					return defer.promise;
-				}
-			}
-		})
+                .state('contact', {
+                    url: '/contact',
+                    templateUrl: "templates/contact.html",
+                 })
 
-		.when('/showExpensesByCategory', {
-			templateUrl : 'templates/showExpensesByCategory.html',
-			controller: 'showExpensesByCategoryController',
-			resolve: {
-				app: function($q, $timeout) {
-					var defer = $q.defer();
-					$timeout(function(){
-						defer.resolve();
-					},3000);
-					return defer.promise;
-				}
-			}
-		})
+                .state('blog', {
+                    url: '/blog',
+                    templateUrl: "templates/blog.html"
+                 })
 
-			.when('/showExpensesByTags', {
-				templateUrl : 'templates/showExpensesByTags.html',
-				controller: 'showExpensesByTagsController',
-				resolve: {
-					app: function($q, $timeout) {
-						var defer = $q.defer();
-						$timeout(function(){
-							defer.resolve();
-						},3000);
-						return defer.promise;
-					}
-				}
-			})
+                .state('reset', {
+                    url: '/reset',
+                    templateUrl: "templates/reset.html"
+                 })
 
-		.when('/contact', {
-			templateUrl : 'contact.html'
-		})
+                 .state('home', {
+                    url :'/',
+                    views :  {
+                        '': {
+                            templateUrl: 'index.html',
+                        },
+                    },
+                })
 
-		//route to sync budget medium collection blog
-		.when('/blog', {
-			templateUrl : 'blog.html'
-		})
-
-		.when('/reset', {
-			templateUrl : 'reset.html'
-		})
-
-		.when('/home', {
-			templateUrl : 'addExpense.html',
-			controller: 'addExpenseController',
-			resolve: {
-				app: function($q, $timeout) {
-					var defer = $q.defer();
-					$timeout(function(){
-						defer.resolve();
-					},2000);
-					return defer.promise;
-				}
-			}
-		});
-
-
-
-	});
+    }])
+	
 
 	//Custom directive
 	app.directive('tree', function(){
@@ -197,155 +128,217 @@ var app = angular.module('syncBudget',['ngRoute','ui.bootstrap','ngTouch','ngAni
 
 	});
 
-	//Google Intialization is done here
-	app.run(function($rootScope) {
-
-		var CLIENT_ID = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
-		var SCOPES = 'https://www.googleapis.com/auth/drive';
-		var MAIN_APP_FOLDER_ID = 0;
-		var isAuthenticated
-		$rootScope.isGoogleAuthenticated=true;
-		/**
-		 * Called when the client library is loaded to start the auth flow.
-		 */
-		$rootScope.handleClientLoad = function() {
-			window.setTimeout($rootScope.checkAuth, 1);
-		};
-
-		/**
-		 * Check if the current user has authorized the application.
-		 */
-		$rootScope.checkAuth  = function() {
-			gapi.auth.authorize(
-				{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
-				$rootScope.handleAuthResult);
-		};
-
-		/**
-		 * Called when authorization server replies.
-		 *
-		 * @param {Object} authResult Authorization result.
-		 */
-		$rootScope.handleAuthResult = function(authResult){
-			var authButton = document.getElementById('connectGoogle');
-			authButton.style.display = 'none';
-			if (authResult && !authResult.error) {
-				// Access token has been successfully retrieved, requests can be sent to the API.
-				$rootScope.isGoogleAuthenticated = true;
-				console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
-				$rootScope.handleInitialFlow();
-			} else {
-				// No access token could be retrieved, show the button to start the authorization flow.
-				authButton.style.display = 'block';
-				$rootScope.isGoogleAuthenticated = false;
-				console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
-				authButton.onclick = function () {
-					gapi.auth.authorize(
-						{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
-						$rootScope.handleAuthResult);
-				};
-			}
-		};
-
-		$rootScope.handleInitialFlow = function() {
-			var isSpendThriftFolderCreated = $rootScope.hasSpendThriftFolder();
-			console.log(isSpendThriftFolderCreated);
-			if (!isSpendThriftFolderCreated) {
-				var isFolderCreated = $rootScope.createNewFolder();
-			}
-			//selectSpendThriftFolder();
 
 
-		};
+app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
+    function(GAuth, GApi, $state, $rootScope, $window) {
 
+        var CLIENT = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
+        var BASE;
+        if($window.location.hostname == 'localhost') {
+            BASE = '//localhost:8080/_ah/api';
+        } else {
+            BASE = 'https://cloud-endpoints-gae.appspot.com/_ah/api';
+        }
 
-		//Get folder id of spendthrift folder
-		$rootScope.getFolderId = function () {
-			gapi.client.load('drive', 'v2', function () {
-				var request = gapi.client.drive.files.list({
-					'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
-				});
-				request.execute(function (resp) {
-					console.log(resp.items.length);
-					if (resp.items.length > 0) {
-						MAIN_APP_FOLDER_ID = resp.items[0].id;
-					}
-					console.log(MAIN_APP_FOLDER_ID);
-				});
-			});
-		};
+       // GApi.load('myContactApi', 'v2', BASE);
+        GApi.load('drive', 'v2');
+        GAuth.setClient(CLIENT);
+        GAuth.setScope('https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive');
+        GAuth.checkAuth().then(
+            function () {
+                   $rootScope.isGoogleAuthenticated=true;
+            },
+            function() {
+                 $rootScope.isGoogleAuthenticated=false;
+            }
+        );
+        $rootScope.doLogin=function() {
+            GAuth.login().then(function(){
+            	$rootScope.isGoogleAuthenticated=true;
+            	GApi.createNewFolder();
+            });
+        };
 
-		$rootScope.createNewFile = function () {
-			console.log("In Create new file")
-			console.log(MAIN_APP_FOLDER_ID);
-			gapi.client.load('drive', 'v2', function () {
-				var request = gapi.client.request({
-					'path': '/drive/v2/files',
-					'method': 'POST',
-					'body': {
-						"title": "MyBudget",
-						"parents": [{"id": MAIN_APP_FOLDER_ID}],
-						"mimeType": "application/vnd.google-apps.spreadsheet"
-					}
-				});
-				request.execute(function (resp) {
-					console.log(resp);
-				});
-			});
-		};
-
-		$rootScope.createNewFolder = function () {
-			console.log("In Create new folder")
-			gapi.client.load('drive', 'v2', function () {
-				var request = gapi.client.request({
-					'path': '/drive/v2/files',
-					'method': 'POST',
-					'body': {
-						"title": "SpendThriftData",
-						"mimeType": "application/vnd.google-apps.folder"
-					}
-				});
-				request.execute(function (resp) {
-					console.log(resp);
-				});
-			});
-			return true;
-		};
-		$rootScope.hasSpendThriftFolder = false;
-		$rootScope.hasSpendThriftFolder = function ($rootScope) {
-			console.log("In hasSpendThriftFolder");
-			gapi.client.load('drive', 'v2', function() {
-				var request = gapi.client.drive.files.list({
-					'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
-				});
-
-				request.execute(function(resp) {
-					console.log("In hasSpendThriftFolder");
-					if(resp.items.length > 0){
-						console.log("In hasSpendThriftFolder"+resp.items.length > 0);
-						$rootScope.hasSpendThriftFolder = true;
-					}
-				});
-			});
-			return $rootScope.hasSpendThriftFolder;
-		};
-
-		// Authenticate when the user clicks the login button.
-		$('#connectGoogle').click(function (e) {
-			e.preventDefault();
-			$rootScope.handleClientLoad();
-			console.log("connect google clicked");
-		});
-		window.onload=function(){
-			window.setTimeout($rootScope.handleClientLoad, 1);
-		}
-		
-
-		$('.side-nav>li>a').click(function(event){
+        $rootScope.logout = function() {
+            GAuth.logout().then(
+            function () {
+            	$rootScope.isGoogleAuthenticated=false;
+                $state.go('login');
+            });
+        };
+        $('.side-nav>li>a').click(function(event){
 			 $('ul .in').collapse("hide");	
 		});
 
-	});
+    }
+]);
+
+
+
+
+
+
+
+	//Google Intialization is done here
+	// app.run(function($rootScope) {
+
+	// 	var CLIENT_ID = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
+	// 	var SCOPES = 'https://www.googleapis.com/auth/drive';
+	// 	var MAIN_APP_FOLDER_ID = 0;
+	// 	var isAuthenticated
+	// 	$rootScope.isGoogleAuthenticated=true;
+	// 	/**
+	// 	 * Called when the client library is loaded to start the auth flow.
+	// 	 */
+	// 	$rootScope.handleClientLoad = function() {
+	// 		window.setTimeout($rootScope.checkAuth, 1);
+	// 	};
+
+	// 	/**
+	// 	 * Check if the current user has authorized the application.
+	// 	 */
+	// 	$rootScope.checkAuth  = function() {
+	// 		gapi.auth.authorize(
+	// 			{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+	// 			$rootScope.handleAuthResult);
+	// 	};
+
+	// 	/**
+	// 	 * Called when authorization server replies.
+	// 	 *
+	// 	 * @param {Object} authResult Authorization result.
+	// 	 */
+	// 	$rootScope.handleAuthResult = function(authResult){
+	// 		var authButton = document.getElementById('connectGoogle');
+	// 		authButton.style.display = 'none';
+	// 		if (authResult && !authResult.error) {
+	// 			// Access token has been successfully retrieved, requests can be sent to the API.
+	// 			$rootScope.isGoogleAuthenticated = true;
+	// 			console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
+	// 			$rootScope.handleInitialFlow();
+	// 		} else {
+	// 			// No access token could be retrieved, show the button to start the authorization flow.
+	// 			authButton.style.display = 'block';
+	// 			$rootScope.isGoogleAuthenticated = false;
+	// 			console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
+	// 			authButton.onclick = function () {
+	// 				gapi.auth.authorize(
+	// 					{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
+	// 					$rootScope.handleAuthResult);
+	// 			};
+	// 		}
+	// 	};
+
+	// 	$rootScope.handleInitialFlow = function() {
+	// 		var isSpendThriftFolderCreated = $rootScope.hasSpendThriftFolder();
+	// 		console.log(isSpendThriftFolderCreated);
+	// 		if (!isSpendThriftFolderCreated) {
+	// 			var isFolderCreated = $rootScope.createNewFolder();
+	// 		}
+	// 		//selectSpendThriftFolder();
+
+
+	// 	};
+
+
+	// 	//Get folder id of spendthrift folder
+	// 	$rootScope.getFolderId = function () {
+	// 		gapi.client.load('drive', 'v2', function () {
+	// 			var request = gapi.client.drive.files.list({
+	// 				'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+	// 			});
+	// 			request.execute(function (resp) {
+	// 				console.log(resp.items.length);
+	// 				if (resp.items.length > 0) {
+	// 					MAIN_APP_FOLDER_ID = resp.items[0].id;
+	// 				}
+	// 				console.log(MAIN_APP_FOLDER_ID);
+	// 			});
+	// 		});
+	// 	};
+
+	// 	$rootScope.createNewFile = function () {
+	// 		console.log("In Create new file")
+	// 		console.log(MAIN_APP_FOLDER_ID);
+	// 		gapi.client.load('drive', 'v2', function () {
+	// 			var request = gapi.client.request({
+	// 				'path': '/drive/v2/files',
+	// 				'method': 'POST',
+	// 				'body': {
+	// 					"title": "MyBudget",
+	// 					"parents": [{"id": MAIN_APP_FOLDER_ID}],
+	// 					"mimeType": "application/vnd.google-apps.spreadsheet"
+	// 				}
+	// 			});
+	// 			request.execute(function (resp) {
+	// 				console.log(resp);
+	// 			});
+	// 		});
+	// 	};
+
+	// 	$rootScope.createNewFolder = function () {
+	// 		console.log("In Create new folder")
+	// 		gapi.client.load('drive', 'v2', function () {
+	// 			var request = gapi.client.request({
+	// 				'path': '/drive/v2/files',
+	// 				'method': 'POST',
+	// 				'body': {
+	// 					"title": "SpendThriftData",
+	// 					"mimeType": "application/vnd.google-apps.folder"
+	// 				}
+	// 			});
+	// 			request.execute(function (resp) {
+	// 				console.log(resp);
+	// 			});
+	// 		});
+	// 		return true;
+	// 	};
+	// 	$rootScope.hasSpendThriftFolder = false;
+	// 	$rootScope.hasSpendThriftFolder = function ($rootScope) {
+	// 		console.log("In hasSpendThriftFolder");
+	// 		gapi.client.load('drive', 'v2', function() {
+	// 			var request = gapi.client.drive.files.list({
+	// 				'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+	// 			});
+
+	// 			request.execute(function(resp) {
+	// 				console.log("In hasSpendThriftFolder");
+	// 				if(resp.items.length > 0){
+	// 					console.log("In hasSpendThriftFolder"+resp.items.length > 0);
+	// 					$rootScope.hasSpendThriftFolder = true;
+	// 				}
+	// 			});
+	// 		});
+	// 		return $rootScope.hasSpendThriftFolder;
+	// 	};
+
+	// 	// Authenticate when the user clicks the login button.
+	// 	$('#connectGoogle').click(function (e) {
+	// 		e.preventDefault();
+	// 		$rootScope.handleClientLoad();
+	// 		console.log("connect google clicked");
+	// 	});
+	// 	window.onload=function(){
+	// 		window.setTimeout($rootScope.handleClientLoad, 1);
+	// 	}
+		
+
+	// 	$('.side-nav>li>a').click(function(event){
+	// 		 $('ul .in').collapse("hide");	
+	// 	});
+
+	// });
+
+
+
+
+
+
+
+
+
+
 
 		/*----------------------------------------------------------*/
 		app.controller('showCategoriesController', function($scope,$log){

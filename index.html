@@ -37,6 +37,10 @@
   <script src="libs/highcharts.js"></script>
   <script src="libs/jqcloud.min.js"></script>
   <script type="text/javascript" src="https://apis.google.com/js/client.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <script src="js/angular-ui-router.min.js"></script>
+    <script src="js/angular-google-gapi.js"></script>
     
    
     <!-- Custom css-->
@@ -78,7 +82,7 @@
                             <!-- Top Menu Items -->
                             <ul class="nav navbar-right top-nav hidden-xs">
                                 <li>
-                                     <button type="button" class="loginButton" id="connectGoogle"><i class="fa fa-user"></i>  Login</button>
+                                <a class="loginButton" ng-click="doLogin()"  href="" role="button"><i class="fa fa-user"></i>Login with Google</a>
                                 </li>
                             </ul>
                             <!-- Top Menu removed-->
@@ -87,17 +91,17 @@
                             <div  class="collapse navbar-collapse navbar-ex1-collapse">
                                 <ul ng-show="isGoogleAuthenticated"  class="nav navbar-nav side-nav">
                                     <li class="active">
-                                        <a href="#" id="home"><i class="fa fa-fw fa-dashboard"></i> Home</a>
+                                        <a ui-sref="#" id="home"><i class="fa fa-fw fa-dashboard"></i> Home</a>
                                     </li>
                                    
                                     <li>
                                         <a href="" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-file"></i> My Categories <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo" class="collapse">
                                             <li>
-                                                <a href="#showCategories">Show Categories</a>
+                                                <a ui-sref="showCategories">Show Categories</a>
                                             </li>
                                             <li>
-                                                <a href="#addCategories">Add Categories</a>
+                                                <a ui-sref="addCategories">Add Categories</a>
                                             </li>
                                 
                                         </ul>
@@ -106,13 +110,13 @@
                                         <a href="" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-desktop"></i> Show <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo1" class="collapse">
                                             <li>
-                                                <a href="#showExpenses">All</a>
+                                                <a ui-sref="showExpenses">All</a>
                                             </li>
                                             <li>
-                                                <a href="#showExpensesByCategory">By Category</a>
+                                                <a ui-sref="showExpensesByCategory">By Category</a>
                                             </li>
                                              <li>
-                                                <a href="#showExpensesByTags">By Tags</a>
+                                                <a ui-sref="showExpensesByTags">By Tags</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -120,10 +124,10 @@
                                         <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-edit"></i> Add <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo2" class="collapse">
                                             <li>
-                                                <a href="#addExpense">Expenses</a>
+                                                <a ui-sref="addExpense">Expenses</a>
                                             </li>
                                             <li>
-                                                <a href="#addIncome">Income</a>
+                                                <a ui-sref="addIncome">Income</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -131,13 +135,13 @@
                                         <a href="javascript:;" data-toggle="collapse" data-target="#demo3"><i class="fa fa-fw fa-bar-chart-o"></i> Graphs <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo3" class="collapse">
                                             <li>
-                                                <a href="#showGraphs">By Month</a>
+                                                <a ui-sref="showGraphs">By Month</a>
                                             </li>
                                             <li>
-                                                <a href="#showGraphsByCategories">By Category</a>
+                                                <a ui-sref="showGraphsByCategories">By Category</a>
                                             </li>
                                              <li>
-                                                <a href="#showGraphsByTags">By Tags</a>
+                                                <a ui-sref="showGraphsByTags">By Tags</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -313,7 +317,7 @@
                                 <!--ng-view-->
 
                                 <div class="row">
-                                  <div class="page" ng-view></div>
+                                  <div class="page" ui-view></div>
                                 </div>
 
                                 
