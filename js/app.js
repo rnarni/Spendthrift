@@ -11,11 +11,7 @@ var app = angular.module('syncBudget',['ui.router',
 
                 .state('addCategories', {
                     url :'/addCategories',
-                    views :  {
-                        '': {
-                            templateUrl: 'templates/addCategories.html'
-                        },
-                    },
+                    templateUrl: 'templates/addCategories.html'
                 })
 
                 .state('addExpense', {
@@ -83,11 +79,7 @@ var app = angular.module('syncBudget',['ui.router',
 
                  .state('home', {
                     url :'/',
-                    views :  {
-                        '': {
-                            templateUrl: 'index.html',
-                        },
-                    },
+                    templateUrl: 'index.html'        
                 })
 
     }])
