@@ -149,10 +149,23 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
             GAuth.login().then(function(){
             	$rootScope.isGoogleAuthenticated=true;
             	GApi.hasSpendThriftFolder().then(function(){
-            		console.log("SpendThrift Already exist");
-            	},
-            	function(){
-            		GApi.createNewFolder();
+		            		console.log("SpendThrift Already exist");
+		            	},
+		            	function(){
+		            		/*create a new folder*/
+		            		GApi.createNewFolder().then(function(){
+
+		            			/*Get folder id */
+		            			GApi.getFolderId().then(function(data){
+		            				/*crate a new file*/
+		            				GApi.createNewFile(data)
+			            			console.log(data);
+			            		},
+			            		function(){
+			            			console.log("xxxxx");
+			            		});
+		                });
+            		
             	});
             	
             });

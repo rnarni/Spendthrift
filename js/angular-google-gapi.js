@@ -372,6 +372,7 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
             },
             createNewFolder:function(){
              console.log("In Create new folder")
+             var deferred=$q.defer();
                  gapi.client.load('drive', 'v2', function () {
                      var request = gapi.client.request({
                          'path': '/drive/v2/files',
@@ -382,10 +383,11 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
                          }
                      });
                      request.execute(function (resp) {
+                        deferred.resolve();
                          console.log(resp);
                      });
                  });
-                 return true;
+                 return deferred.promise;
         },
         hasSpendThriftFolder:function(){
             console.log("In hasSpendThriftFolder");
@@ -404,6 +406,44 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
              });
          });
          return deferred.promise;
+
+        },
+        getFolderId:function(){
+            var deferred = $q.defer();
+                gapi.client.load('drive', 'v2', function () {
+                 var request = gapi.client.drive.files.list({
+                     'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+                 });
+                 request.execute(function (resp) {
+                     console.log(resp.items.length);
+                     if (resp.items.length > 0) {
+                         deferred.resolve(resp.items[0].id);
+                         // MAIN_APP_FOLDER_ID = resp.items[0].id;
+                     }
+                     else{
+                        deferred.reject();
+                     }
+                     
+                 });
+             });
+        return deferred.promise;
+        },
+        createNewFile:function(folderId){
+                 console.log("In Create new file")
+                 gapi.client.load('drive', 'v2', function () {
+                         var request = gapi.client.request({
+                             'path': '/drive/v2/files',
+                             'method': 'POST',
+                             'body': {
+                                 "title": "MyBudget",
+                                 "parents": [{"id": folderId}],
+                                 "mimeType": "application/vnd.google-apps.spreadsheet"
+                             }
+                         });
+                         request.execute(function (resp) {
+                             console.log(resp);
+                         });
+                 });
 
         },
 
