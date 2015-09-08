@@ -386,7 +386,26 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
                      });
                  });
                  return true;
-     },
+        },
+        hasSpendThriftFolder:function(){
+            console.log("In hasSpendThriftFolder");
+            var deferred = $q.defer();
+            gapi.client.load('drive', 'v2', function() {
+             var request = gapi.client.drive.files.list({
+                 'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+             }).execute(function(resp) {
+                 console.log("In hasSpendThriftFolder");
+                 if(resp.items.length > 0){
+                     console.log("In hasSpendThriftFolder"+resp.items.length > 0);
+                     deferred.resolve();
+                 }else{
+                    deferred.reject();
+                 }
+             });
+         });
+         return deferred.promise;
+
+        },
 
         }
     }]);

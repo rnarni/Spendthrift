@@ -148,7 +148,13 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
         $rootScope.doLogin=function() {
             GAuth.login().then(function(){
             	$rootScope.isGoogleAuthenticated=true;
-            	GApi.createNewFolder();
+            	GApi.hasSpendThriftFolder().then(function(){
+            		console.log("SpendThrift Already exist");
+            	},
+            	function(){
+            		GApi.createNewFolder();
+            	});
+            	
             });
         };
 
