@@ -394,7 +394,7 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
             var deferred = $q.defer();
             gapi.client.load('drive', 'v2', function() {
              var request = gapi.client.drive.files.list({
-                 'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+                 'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
              }).execute(function(resp) {
                  console.log("In hasSpendThriftFolder");
                  if(resp.items.length > 0){
@@ -412,7 +412,7 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
             var deferred = $q.defer();
                 gapi.client.load('drive', 'v2', function () {
                  var request = gapi.client.drive.files.list({
-                     'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
+                     'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder' and trashed = false"
                  });
                  request.execute(function (resp) {
                      console.log(resp.items.length);
@@ -445,7 +445,6 @@ angular.module('angular-google-gapi').factory('GApi', ['$q', 'GClient', 'GData',
                          });
                  });
 
-        },
-
+        }
         }
     }]);
