@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="syncBudget">
+<html lang="en" ng-app="spendThrift">
 
 <head>
 
@@ -40,8 +40,10 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <script src="js/angular-ui-router.min.js"></script>
-    <script src="js/angular-google-gapi.js"></script>
-    
+
+
+    <!--Nimbus base -->
+    <script src="http://nimbusbase.com/static/nimbus.min.js"></script>
    
     <!-- Custom css-->
     <link href="css/welcome.css" rel="stylesheet">
@@ -82,7 +84,7 @@
                             <!-- Top Menu Items -->
                             <ul class="nav navbar-right top-nav hidden-xs">
                                 <li>
-                                <a class="loginButton" ng-click="doLogin()"  href="" role="button"><i class="fa fa-user"></i>Login with Google</a>
+                                <a class="loginButton" ng-click="authorizeDropbox()"  href="" role="button"><i class="fa fa-dropbox"></i>Login with Dropbox</a>
                                 </li>
                             </ul>
                             <!-- Top Menu removed-->
