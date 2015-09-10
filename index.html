@@ -38,11 +38,11 @@
   <script src="libs/jqcloud.min.js"></script>
 
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
-    <script src="js/angular-ui-router.min.js"></script>
+
 
 
     <!--Nimbus base -->
+    <script src="https://www.dropbox.com/static/api/dropbox-datastores-1.2-latest.js" type="text/javascript"></script>
     <script src="http://nimbusbase.com/static/nimbus.min.js"></script>
    
     <!-- Custom css-->
@@ -55,7 +55,7 @@
    <script type="text/javascript" src="js/welcome.js"></script>
       
 
-  <script src="https://www.dropbox.com/static/api/dropbox-datastores-1.2-latest.js" type="text/javascript"></script>
+  
 
     <!-- Fonts -->
      <link href="libs/fonts/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -93,17 +93,17 @@
                             <div  class="collapse navbar-collapse navbar-ex1-collapse">
                                 <ul ng-show="isClientAuthenticated"  class="nav navbar-nav side-nav">
                                     <li class="active">
-                                        <a ui-sref="#" id="home"><i class="fa fa-fw fa-dashboard"></i> Home</a>
+                                        <a href="#" id="home"><i class="fa fa-fw fa-dashboard"></i> Home</a>
                                     </li>
                                    
                                     <li>
                                         <a href="" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-file"></i> My Categories <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo" class="collapse">
                                             <li>
-                                                <a ui-sref="showCategories">Show Categories</a>
+                                                <a href="#showCategories">Show Categories</a>
                                             </li>
                                             <li>
-                                                <a ui-sref="addCategories">Add Categories</a>
+                                                <a href="#addCategories">Add Categories</a>
                                             </li>
                                 
                                         </ul>
@@ -112,13 +112,13 @@
                                         <a href="" data-toggle="collapse" data-target="#demo1"><i class="fa fa-fw fa-desktop"></i> Show <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo1" class="collapse">
                                             <li>
-                                                <a ui-sref="showExpenses">All</a>
+                                                <a href="#showExpenses">All</a>
                                             </li>
                                             <li>
-                                                <a ui-sref="showExpensesByCategory">By Category</a>
+                                                <a href="#showExpensesByCategory">By Category</a>
                                             </li>
                                              <li>
-                                                <a ui-sref="showExpensesByTags">By Tags</a>
+                                                <a href="#showExpensesByTags">By Tags</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -126,10 +126,10 @@
                                         <a href="javascript:;" data-toggle="collapse" data-target="#demo2"><i class="fa fa-fw fa-edit"></i> Add <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo2" class="collapse">
                                             <li>
-                                                <a ui-sref="addExpense">Expenses</a>
+                                                <a href="#addExpense">Expenses</a>
                                             </li>
                                             <li>
-                                                <a ui-sref="addIncome">Income</a>
+                                                <a href="#addIncome">Income</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -137,13 +137,13 @@
                                         <a href="javascript:;" data-toggle="collapse" data-target="#demo3"><i class="fa fa-fw fa-bar-chart-o"></i> Graphs <i class="fa fa-fw fa-caret-down"></i></a>
                                         <ul id="demo3" class="collapse">
                                             <li>
-                                                <a ui-sref="showGraphs">By Month</a>
+                                                <a href="#showGraphs">By Month</a>
                                             </li>
                                             <li>
-                                                <a ui-sref="showGraphsByCategories">By Category</a>
+                                                <a href="#showGraphsByCategories">By Category</a>
                                             </li>
                                              <li>
-                                                <a ui-sref="showGraphsByTags">By Tags</a>
+                                                <a href="#showGraphsByTags">By Tags</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -161,7 +161,7 @@
                 <!-- navigation end-->
 
                 <!--Welcome page-->
-                <div ng-show="!isGoogleAuthenticated" class="container">
+                <div ng-show="!isClientAuthenticated" class="container">
 
                     <div class="row">
                         <div class="box box-carousal">
@@ -218,7 +218,7 @@
 
 
                 <!--page wrapper-->
-                <div id="page-wrapper"  ng-show="isGoogleAuthenticated">
+                <div id="page-wrapper"  ng-show="isClientAuthenticated">
 
                             <div class="container-fluid" >
                                
@@ -319,7 +319,7 @@
                                 <!--ng-view-->
 
                                 <div class="row">
-                                  <div class="page" ui-view></div>
+                                  <div class="page" ng-view></div>
                                 </div>
 
                                 

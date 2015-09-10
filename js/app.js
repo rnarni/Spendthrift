@@ -10,10 +10,10 @@
 
 		$routeProvider
 
-			.when('/',{
-				templateUrl : 'welcome.html',
-				controller : 'welcomeController'
-			})
+			// .when('/',{
+			// 	templateUrl : 'welcome.html',
+			// 	controller : 'welcomeController'
+			// })
 
 			// route for the categories page
 			.when('/addCategories', {
@@ -21,7 +21,7 @@
 			})
 
 			.when('/addExpense', {
-				templateUrl : 'addExpense.html',
+				templateUrl : 'templates/addExpense.html',
 				controller: 'addExpenseController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -35,7 +35,7 @@
 			})
 
 			.when('/showCategories', {
-				templateUrl : 'showCategories.html',
+				templateUrl : 'templates/showCategories.html',
 				controller: 'showCategoriesController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -49,7 +49,7 @@
 			})
 
 			.when('/showGraphs', {
-				templateUrl : 'showGraphs.html',
+				templateUrl : 'templates/showGraphs.html',
 				controller: 'showGraphsController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -63,7 +63,7 @@
 			})
 
 			.when('/showGraphsByCategories', {
-				templateUrl : 'showGraphsByCategories.html',
+				templateUrl : 'templates/showGraphsByCategories.html',
 				controller: 'showGraphsByCategoriesCtrl',
 				resolve: {
 					app: function($q, $timeout) {
@@ -77,7 +77,7 @@
 			})
 
 			.when('/showGraphsByTags', {
-				templateUrl : 'showGraphsByTags.html',
+				templateUrl : 'templates/showGraphsByTags.html',
 				controller: 'showGraphsByTagsCtrl',
 				resolve: {
 					app: function($q, $timeout) {
@@ -91,7 +91,7 @@
 			})
 
 			.when('/showExpenses', {
-				templateUrl : 'showExpenses.html',
+				templateUrl : 'templates/showExpenses.html',
 				controller: 'showExpensesController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -105,7 +105,7 @@
 			})
 
 			.when('/showExpensesByCategory', {
-				templateUrl : 'showExpensesByCategory.html',
+				templateUrl : 'templates/showExpensesByCategory.html',
 				controller: 'showExpensesByCategoryController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -119,7 +119,7 @@
 			})
 
 			.when('/showExpensesByTags', {
-				templateUrl : 'showExpensesByTags.html',
+				templateUrl : 'templates/showExpensesByTags.html',
 				controller: 'showExpensesByTagsController',
 				resolve: {
 					app: function($q, $timeout) {
@@ -202,7 +202,7 @@
 	app.run(function($rootScope) {
 
 
-		$rootScope.isClientAuthenticated = false;
+		$rootScope.isClientAuthenticated = true;
 		console.log("checking Authorization");
 		if(Nimbus.Auth.authorized()){
 			$rootScope.isClientAuthenticated = true;
@@ -226,13 +226,14 @@
 			};
 
 			var authPromise =  Nimbus.Auth.authorize('Dropbox');
+			
 
-			//authPromise.promise.then(
-			//if(Nimbus.Auth.authorized()){
-			//	$rootScope.isClientAuthenticated = true;
-			//	console.log("Authenticated in promise");
-			//}
-			//);
+			// authPromise.then(
+			// if(Nimbus.Auth.authorized()){
+			// 	$rootScope.isClientAuthenticated = true;
+			// 	console.log("Authenticated in promise");
+			// }
+			// );
 
 
 
