@@ -1,89 +1,167 @@
 (function(){
-var app = angular.module('syncBudget',['ui.router',
-    'angular-google-gapi','ui.bootstrap','ngTouch','ngAnimate']);
+	var app = angular.module('spendThrift',['ngRoute','ui.bootstrap','ngTouch','ngAnimate']);
 
 
-	app.config(['$stateProvider','$urlRouterProvider',
-        function($stateProvider) {
+
+	//Routing Configuration
+
+	app.config(function($routeProvider) {
 
 
-            $stateProvider
+		$routeProvider
 
-                .state('addCategories', {
-                    url :'/addCategories',
-                    templateUrl: 'templates/addCategories.html'
-                })
+			.when('/',{
+				templateUrl : 'welcome.html',
+				controller : 'welcomeController'
+			})
 
-                .state('addExpense', {
-                    url :'/addExpense',
-                    templateUrl: 'templates/addExpense.html',
-                    controller: 'addExpenseController'
-                })
+			// route for the categories page
+			.when('/addCategories', {
+				templateUrl : 'addCategories.html'
+			})
 
-                .state('showCategories', {
-                    url :'/showCategories',
-                    templateUrl: 'templates/showCategories.html',
-                    controller: 'showCategoriesController'
-                })
+			.when('/addExpense', {
+				templateUrl : 'addExpense.html',
+				controller: 'addExpenseController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},2000);
+						return defer.promise;
+					}
+				}
+			})
 
-                .state('showGraphs', {
-                    url :'/showGraphs',
-                    templateUrl: 'templates/showGraphs.html',
-                    controller: 'showGraphsController'
-                           
-                })
+			.when('/showCategories', {
+				templateUrl : 'showCategories.html',
+				controller: 'showCategoriesController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                .state('showExpensesByCategory', {
-                    url :'/showGraphsByCategories',
-                    templateUrl: 'templates/showGraphsByCategories.html',
-                    controller: 'showGraphsByCategoriesCtrl'
-                           
-                        
-                })
+			.when('/showGraphs', {
+				templateUrl : 'showGraphs.html',
+				controller: 'showGraphsController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                 .state('showGraphsByTags', {
-                    url :'/showGraphsByTags',
-                    templateUrl: 'templates/showGraphsByTags.html',
-                    controller: 'showGraphsByTagsCtrl'
-                            
-                })
+			.when('/showGraphsByCategories', {
+				templateUrl : 'showGraphsByCategories.html',
+				controller: 'showGraphsByCategoriesCtrl',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                .state('showExpenses', {
-                    url :'/showExpenses',
-                    templateUrl: 'templates/showExpenses.html',
-                    controller: 'showExpensesController'
-                                  
-                })
+			.when('/showGraphsByTags', {
+				templateUrl : 'showGraphsByTags.html',
+				controller: 'showGraphsByTagsCtrl',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                 .state('showExpensesByTags', {
-                    url :'/showExpensesByTags',
-                    templateUrl: 'templates/showExpensesByTags.html',
-                    controller: 'showExpensesByTagsController'
-                           
-                })
+			.when('/showExpenses', {
+				templateUrl : 'showExpenses.html',
+				controller: 'showExpensesController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                .state('contact', {
-                    url: '/contact',
-                    templateUrl: "templates/contact.html",
-                 })
+			.when('/showExpensesByCategory', {
+				templateUrl : 'showExpensesByCategory.html',
+				controller: 'showExpensesByCategoryController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                .state('blog', {
-                    url: '/blog',
-                    templateUrl: "templates/blog.html"
-                 })
+			.when('/showExpensesByTags', {
+				templateUrl : 'showExpensesByTags.html',
+				controller: 'showExpensesByTagsController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},3000);
+						return defer.promise;
+					}
+				}
+			})
 
-                .state('reset', {
-                    url: '/reset',
-                    templateUrl: "templates/reset.html"
-                 })
+			.when('/contact', {
+				templateUrl : 'contact.html'
+			})
 
-                 .state('home', {
-                    url :'/',
-                    templateUrl: 'index.html'        
-                })
+			//route to sync budget medium collection blog
+			.when('/blog', {
+				templateUrl : 'blog.html'
+			})
 
-    }])
-	
+			.when('/reset', {
+				templateUrl : 'reset.html'
+			})
+
+			.when('/home', {
+				templateUrl : 'addExpense.html',
+				controller: 'addExpenseController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},2000);
+						return defer.promise;
+					}
+				}
+			});
+
+
+
+	});
 
 	//Custom directive
 	app.directive('tree', function(){
@@ -120,445 +198,241 @@ var app = angular.module('syncBudget',['ui.router',
 
 	});
 
+	//Dropbox Authorization is done here
+	app.run(function($rootScope) {
 
 
-app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
-    function(GAuth, GApi, $state, $rootScope, $window) {
+		$rootScope.isClientAuthenticated = false;
 
-        var CLIENT = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
-        var BASE;
-        if($window.location.hostname == 'localhost') {
-            BASE = '//localhost:8080/_ah/api';
-        } else {
-            BASE = 'https://cloud-endpoints-gae.appspot.com/_ah/api';
-        }
+		$rootScope.authorizeDropbox = function(){
+			var sync_object = {
+				"Dropbox": {
+					"key": "o1jwubie72fvekd",
+					"secret": "sogx0h9t09dcmw4",
+					"app_name": "SpendThrift"
+				},
 
-       // GApi.load('myContactApi', 'v2', BASE);
-        GApi.load('drive', 'v2');
-        GAuth.setClient(CLIENT);
-        GAuth.setScope('https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/drive');
-        GAuth.checkAuth().then(
-            function () {
-                   $rootScope.isGoogleAuthenticated=true;
-            },
-            function() {
-                 $rootScope.isGoogleAuthenticated=false;
-            }
-        );
-        $rootScope.doLogin=function() {
-            GAuth.login().then(function(){
-            	$rootScope.isGoogleAuthenticated=true;
-            	GApi.hasSpendThriftFolder().then(function(){
-		            		console.log("SpendThrift Already exist");
-		            	},
-		            	function(){
-		            		/*create a new folder*/
-		            		GApi.createNewFolder().then(function(){
-
-		            			/*Get folder id */
-		            			GApi.getFolderId().then(function(data){
-		            				/*crate a new file*/
-		            				GApi.createNewFile(data)
-			            			console.log(data);
-			            		},
-			            		function(){
-			            			console.log("xxxxx");
-			            		});
-		                });
-            		
-            	});
-            	
-            });
-        };
-
-        $rootScope.logout = function() {
-            GAuth.logout().then(
-            function () {
-            	$rootScope.isGoogleAuthenticated=false;
-                $state.go('login');
-            });
-        };
-        $('.side-nav>li>a').click(function(event){
-			 $('ul .in').collapse("hide");	
-		});
-
-    }
-]);
-
-
-
-
-
-
-
-	//Google Intialization is done here
-	// app.run(function($rootScope) {
-
-	// 	var CLIENT_ID = '61174966610-kji5jrqnaudt5pokuv45r1vd358nkr1p.apps.googleusercontent.com';
-	// 	var SCOPES = 'https://www.googleapis.com/auth/drive';
-	// 	var MAIN_APP_FOLDER_ID = 0;
-	// 	var isAuthenticated
-	// 	$rootScope.isGoogleAuthenticated=true;
-	// 	/**
-	// 	 * Called when the client library is loaded to start the auth flow.
-	// 	 */
-	// 	$rootScope.handleClientLoad = function() {
-	// 		window.setTimeout($rootScope.checkAuth, 1);
-	// 	};
-
-	// 	/**
-	// 	 * Check if the current user has authorized the application.
-	// 	 */
-	// 	$rootScope.checkAuth  = function() {
-	// 		gapi.auth.authorize(
-	// 			{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
-	// 			$rootScope.handleAuthResult);
-	// 	};
-
-	// 	/**
-	// 	 * Called when authorization server replies.
-	// 	 *
-	// 	 * @param {Object} authResult Authorization result.
-	// 	 */
-	// 	$rootScope.handleAuthResult = function(authResult){
-	// 		var authButton = document.getElementById('connectGoogle');
-	// 		authButton.style.display = 'none';
-	// 		if (authResult && !authResult.error) {
-	// 			// Access token has been successfully retrieved, requests can be sent to the API.
-	// 			$rootScope.isGoogleAuthenticated = true;
-	// 			console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
-	// 			$rootScope.handleInitialFlow();
-	// 		} else {
-	// 			// No access token could be retrieved, show the button to start the authorization flow.
-	// 			authButton.style.display = 'block';
-	// 			$rootScope.isGoogleAuthenticated = false;
-	// 			console.log("Google authenticated:"+$rootScope.isGoogleAuthenticated);
-	// 			authButton.onclick = function () {
-	// 				gapi.auth.authorize(
-	// 					{'client_id': CLIENT_ID, 'scope': SCOPES, 'immediate': false},
-	// 					$rootScope.handleAuthResult);
-	// 			};
-	// 		}
-	// 	};
-
-	// 	$rootScope.handleInitialFlow = function() {
-	// 		var isSpendThriftFolderCreated = $rootScope.hasSpendThriftFolder();
-	// 		console.log(isSpendThriftFolderCreated);
-	// 		if (!isSpendThriftFolderCreated) {
-	// 			var isFolderCreated = $rootScope.createNewFolder();
-	// 		}
-	// 		//selectSpendThriftFolder();
-
-
-	// 	};
-
-
-	// 	//Get folder id of spendthrift folder
-	// 	$rootScope.getFolderId = function () {
-	// 		gapi.client.load('drive', 'v2', function () {
-	// 			var request = gapi.client.drive.files.list({
-	// 				'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
-	// 			});
-	// 			request.execute(function (resp) {
-	// 				console.log(resp.items.length);
-	// 				if (resp.items.length > 0) {
-	// 					MAIN_APP_FOLDER_ID = resp.items[0].id;
-	// 				}
-	// 				console.log(MAIN_APP_FOLDER_ID);
-	// 			});
-	// 		});
-	// 	};
-
-	// 	$rootScope.createNewFile = function () {
-	// 		console.log("In Create new file")
-	// 		console.log(MAIN_APP_FOLDER_ID);
-	// 		gapi.client.load('drive', 'v2', function () {
-	// 			var request = gapi.client.request({
-	// 				'path': '/drive/v2/files',
-	// 				'method': 'POST',
-	// 				'body': {
-	// 					"title": "MyBudget",
-	// 					"parents": [{"id": MAIN_APP_FOLDER_ID}],
-	// 					"mimeType": "application/vnd.google-apps.spreadsheet"
-	// 				}
-	// 			});
-	// 			request.execute(function (resp) {
-	// 				console.log(resp);
-	// 			});
-	// 		});
-	// 	};
-
-	// 	$rootScope.createNewFolder = function () {
-	// 		console.log("In Create new folder")
-	// 		gapi.client.load('drive', 'v2', function () {
-	// 			var request = gapi.client.request({
-	// 				'path': '/drive/v2/files',
-	// 				'method': 'POST',
-	// 				'body': {
-	// 					"title": "SpendThriftData",
-	// 					"mimeType": "application/vnd.google-apps.folder"
-	// 				}
-	// 			});
-	// 			request.execute(function (resp) {
-	// 				console.log(resp);
-	// 			});
-	// 		});
-	// 		return true;
-	// 	};
-	// 	$rootScope.hasSpendThriftFolder = false;
-	// 	$rootScope.hasSpendThriftFolder = function ($rootScope) {
-	// 		console.log("In hasSpendThriftFolder");
-	// 		gapi.client.load('drive', 'v2', function() {
-	// 			var request = gapi.client.drive.files.list({
-	// 				'q': "title='SpendThriftData' and mimeType = 'application/vnd.google-apps.folder'"
-	// 			});
-
-	// 			request.execute(function(resp) {
-	// 				console.log("In hasSpendThriftFolder");
-	// 				if(resp.items.length > 0){
-	// 					console.log("In hasSpendThriftFolder"+resp.items.length > 0);
-	// 					$rootScope.hasSpendThriftFolder = true;
-	// 				}
-	// 			});
-	// 		});
-	// 		return $rootScope.hasSpendThriftFolder;
-	// 	};
-
-	// 	// Authenticate when the user clicks the login button.
-	// 	$('#connectGoogle').click(function (e) {
-	// 		e.preventDefault();
-	// 		$rootScope.handleClientLoad();
-	// 		console.log("connect google clicked");
-	// 	});
-	// 	window.onload=function(){
-	// 		window.setTimeout($rootScope.handleClientLoad, 1);
-	// 	}
-		
-
-	// 	$('.side-nav>li>a').click(function(event){
-	// 		 $('ul .in').collapse("hide");	
-	// 	});
-
-	// });
-
-
-
-
-
-
-
-
-
-
-
-		/*----------------------------------------------------------*/
-		app.controller('showCategoriesController', function($scope,$log){
-
-
-
-			$scope.getCategories = function(){
-				console.log("Get Categories called");
-				var store = $scope.datastore;
-				var categoriesTable = store.getTable('categories');
-				$scope.primarycategories = categoriesTable.query({type:'Primary'});
-				for(var i = 0; i < $scope.primarycategories.length; i++){
-					var primaryCategoryName  = $scope.primarycategories[i].get('name');
-					$scope.primarycategories[i].iconName = $scope.primarycategories[i].get('icon');
-					$scope.primarycategories[i].nodes = categoriesTable.query({type:'Secondary', primary:primaryCategoryName});
-					for(var j = 0; j < $scope.primarycategories[i].nodes.length; j++){
-						var secondaryCategoryName  = $scope.primarycategories[i].nodes[j].get('name');
-						$scope.primarycategories[i].nodes[j].iconName = $scope.primarycategories[i].nodes[j].get('icon');
-						$scope.primarycategories[i].nodes[j].nodes = categoriesTable.query({type:'Tertiary', secondary:secondaryCategoryName});
-					}
-				}
-
+				"synchronous" : false
 			};
 
-			$scope.getCategories();
+			Nimbus.Auth.setup(sync_object);
+			Nimbus.Auth.authorize('Dropbox');
+			$rootScope.isClientAuthenticated = true;
+		};
 
 
 
-		});
-		/*----------------------------------------------------------*/
-		app.controller('showExpensesController', function($scope, $modal, $log){
-			$scope.buttonsState = {};
-			$scope.total = 0;
-			$scope.showExpensesBy = "Daily";
-			$scope.buttonsState.showDateField = true;
-			$scope.buttonsState.showMonthField = true;
-			$scope.today = new Date();
-			$scope.currentDate = $scope.today.getDate();
-			$scope.currentMonth = $scope.today.getMonth();
-			$scope.currentYear = $scope.today.getFullYear();
+
+
+	});
+	/*----------------------------------------------------------*/
+	app.controller('showCategoriesController', function($scope,$log){
+
+
+
+		$scope.getCategories = function(){
+			console.log("Get Categories called");
 			var store = $scope.datastore;
-			var expensesTable = store.getTable('expenses');
-			$scope.getDailyExpenses = function(queryDate,queryMonth,queryYear) {
-
-				$scope.expenses = expensesTable.query({date:queryDate,
-					month: queryMonth,
-					year:queryYear });
-
-			};
-			$scope.getMonthlyExpenses = function(queryMonth,queryYear) {
-
-				$scope.expenses = expensesTable.query({month: queryMonth,
-					year:queryYear });
-
-			};
-			$scope.getYearlyExpenses = function(queryYear) {
-
-				$scope.expenses = expensesTable.query({year:queryYear });
-
-			};
-			$scope.getTotal = function(){
-				for(var i = 0; i < $scope.expenses.length; i++){
-					$scope.total += Number($scope.expenses[i].get('amount'));
-
+			var categoriesTable = store.getTable('categories');
+			$scope.primarycategories = categoriesTable.query({type:'Primary'});
+			for(var i = 0; i < $scope.primarycategories.length; i++){
+				var primaryCategoryName  = $scope.primarycategories[i].get('name');
+				$scope.primarycategories[i].iconName = $scope.primarycategories[i].get('icon');
+				$scope.primarycategories[i].nodes = categoriesTable.query({type:'Secondary', primary:primaryCategoryName});
+				for(var j = 0; j < $scope.primarycategories[i].nodes.length; j++){
+					var secondaryCategoryName  = $scope.primarycategories[i].nodes[j].get('name');
+					$scope.primarycategories[i].nodes[j].iconName = $scope.primarycategories[i].nodes[j].get('icon');
+					$scope.primarycategories[i].nodes[j].nodes = categoriesTable.query({type:'Tertiary', secondary:secondaryCategoryName});
 				}
-			};
+			}
 
-			$scope.getExpenses = function(){
-				$scope.total = 0;
-				if($scope.showExpensesBy === "Daily"){
-					$scope.buttonsState.showDateField = true;
-					$scope.buttonsState.showMonthField = true;
-					$scope.getDailyExpenses(Number($scope.currentDate),Number($scope.currentMonth),Number($scope.currentYear));
-					$scope.getTotal();
+		};
 
-				}
-				else if($scope.showExpensesBy === "Monthly"){
-					$scope.buttonsState.showDateField = false;
-					$scope.buttonsState.showMonthField = true;
-
-					$scope.getMonthlyExpenses(Number($scope.currentMonth),Number($scope.currentYear));
-					$scope.getTotal();
-
-				}
-				else if($scope.showExpensesBy === "Yearly"){
-					$scope.buttonsState.showDateField = false;
-					$scope.buttonsState.showMonthField = false;
-					$scope.getYearlyExpenses(Number($scope.currentYear));
-					$scope.getTotal();
-
-				}
-
-			};
-
-			$scope.getDailyExpenses($scope.currentDate,$scope.currentMonth,$scope.currentYear);
-			$scope.getTotal();
+		$scope.getCategories();
 
 
 
+	});
+	/*----------------------------------------------------------*/
+	app.controller('showExpensesController', function($scope, $modal, $log){
+		$scope.buttonsState = {};
+		$scope.total = 0;
+		$scope.showExpensesBy = "Daily";
+		$scope.buttonsState.showDateField = true;
+		$scope.buttonsState.showMonthField = true;
+		$scope.today = new Date();
+		$scope.currentDate = $scope.today.getDate();
+		$scope.currentMonth = $scope.today.getMonth();
+		$scope.currentYear = $scope.today.getFullYear();
+		var store = $scope.datastore;
+		var expensesTable = store.getTable('expenses');
+		$scope.getDailyExpenses = function(queryDate,queryMonth,queryYear) {
+
+			$scope.expenses = expensesTable.query({date:queryDate,
+				month: queryMonth,
+				year:queryYear });
+
+		};
+		$scope.getMonthlyExpenses = function(queryMonth,queryYear) {
+
+			$scope.expenses = expensesTable.query({month: queryMonth,
+				year:queryYear });
+
+		};
+		$scope.getYearlyExpenses = function(queryYear) {
+
+			$scope.expenses = expensesTable.query({year:queryYear });
+
+		};
+		$scope.getTotal = function(){
+			for(var i = 0; i < $scope.expenses.length; i++){
+				$scope.total += Number($scope.expenses[i].get('amount'));
+
+			}
+		};
+
+		$scope.getExpenses = function(){
+			$scope.total = 0;
+			if($scope.showExpensesBy === "Daily"){
+				$scope.buttonsState.showDateField = true;
+				$scope.buttonsState.showMonthField = true;
+				$scope.getDailyExpenses(Number($scope.currentDate),Number($scope.currentMonth),Number($scope.currentYear));
+				$scope.getTotal();
+
+			}
+			else if($scope.showExpensesBy === "Monthly"){
+				$scope.buttonsState.showDateField = false;
+				$scope.buttonsState.showMonthField = true;
+
+				$scope.getMonthlyExpenses(Number($scope.currentMonth),Number($scope.currentYear));
+				$scope.getTotal();
+
+			}
+			else if($scope.showExpensesBy === "Yearly"){
+				$scope.buttonsState.showDateField = false;
+				$scope.buttonsState.showMonthField = false;
+				$scope.getYearlyExpenses(Number($scope.currentYear));
+				$scope.getTotal();
+
+			}
+
+		};
+
+		$scope.getDailyExpenses($scope.currentDate,$scope.currentMonth,$scope.currentYear);
+		$scope.getTotal();
 
 
-			$scope.delete = function(expense){
-				expense.deleteRecord();
-			};
 
-			$scope.open = function (editExpense) {
-				$log.info(editExpense);
-				var modalInstance = $modal.open({
-					templateUrl: 'editExpenseModal.html',
-					controller: 'EditExpenseModalController',
-					size: 'lg'
+
+
+		$scope.delete = function(expense){
+			expense.deleteRecord();
+		};
+
+		$scope.open = function (editExpense) {
+			$log.info(editExpense);
+			var modalInstance = $modal.open({
+				templateUrl: 'editExpenseModal.html',
+				controller: 'EditExpenseModalController',
+				size: 'lg'
 			});
-				modalInstance.expenseToEdit = editExpense;
-			};
+			modalInstance.expenseToEdit = editExpense;
+		};
 
-		});
+	});
 
-		/*----------------------------------------------------------*/
-		app.controller('showExpensesByCategoryController', function($scope, $modal, $log){
-			$scope.showCategoryName = "";
+	/*----------------------------------------------------------*/
+	app.controller('showExpensesByCategoryController', function($scope, $modal, $log){
+		$scope.showCategoryName = "";
+		$scope.total = 0;
+		$scope.categories = [];
+		var allCategories = $scope.datastore.getTable('categories').query();
+		for (var i=0; i < allCategories.length; i++) {
+			$scope.categories.push(allCategories[i].get('name'));
+		}
+
+		$scope.buttonsState = {};
+
+		$scope.showExpensesBy = "Daily";
+		$scope.buttonsState.showDateField = true;
+		$scope.buttonsState.showMonthField = true;
+		$scope.today = new Date();
+		$scope.currentDate = $scope.today.getDate();
+		$scope.currentMonth = $scope.today.getMonth();
+		$scope.currentYear = $scope.today.getFullYear();
+		var store = $scope.datastore;
+		var expensesTable = store.getTable('expenses');
+		$scope.getDailyExpenses = function(queryDate,queryMonth,queryYear) {
+
+			$scope.expenses = expensesTable.query({date:queryDate,
+				month: queryMonth,
+				year:queryYear,
+				category: $scope.showCategoryName});
+
+		};
+		$scope.getMonthlyExpenses = function(queryMonth,queryYear) {
+
+			$scope.expenses = expensesTable.query({month: queryMonth,
+				year:queryYear,
+				category: $scope.showCategoryName});
+
+		};
+		$scope.getYearlyExpenses = function(queryYear) {
+
+			$scope.expenses = expensesTable.query({year:queryYear, category: $scope.showCategoryName });
+
+		};
+		$scope.getTotal = function(){
+			for(var i = 0; i < $scope.expenses.length; i++){
+				$scope.total += Number($scope.expenses[i].get('amount'));
+
+			}
+		};
+
+		$scope.getExpenses = function(){
 			$scope.total = 0;
-			$scope.categories = [];
-			var allCategories = $scope.datastore.getTable('categories').query();
-			for (var i=0; i < allCategories.length; i++) {
-				$scope.categories.push(allCategories[i].get('name'));
+			if($scope.showExpensesBy === "Daily"){
+				$scope.buttonsState.showDateField = true;
+				$scope.buttonsState.showMonthField = true;
+				$scope.getDailyExpenses(Number($scope.currentDate),Number($scope.currentMonth),Number($scope.currentYear));
+				$scope.getTotal();
+
+			}
+			else if($scope.showExpensesBy === "Monthly"){
+				$scope.buttonsState.showDateField = false;
+				$scope.buttonsState.showMonthField = true;
+
+				$scope.getMonthlyExpenses(Number($scope.currentMonth),Number($scope.currentYear));
+				$scope.getTotal();
+
+			}
+			else if($scope.showExpensesBy === "Yearly"){
+				$scope.buttonsState.showDateField = false;
+				$scope.buttonsState.showMonthField = false;
+				$scope.getYearlyExpenses(Number($scope.currentYear));
+				$scope.getTotal();
+
 			}
 
-			$scope.buttonsState = {};
-
-			$scope.showExpensesBy = "Daily";
-			$scope.buttonsState.showDateField = true;
-			$scope.buttonsState.showMonthField = true;
-			$scope.today = new Date();
-			$scope.currentDate = $scope.today.getDate();
-			$scope.currentMonth = $scope.today.getMonth();
-			$scope.currentYear = $scope.today.getFullYear();
-			var store = $scope.datastore;
-			var expensesTable = store.getTable('expenses');
-			$scope.getDailyExpenses = function(queryDate,queryMonth,queryYear) {
-
-				$scope.expenses = expensesTable.query({date:queryDate,
-					month: queryMonth,
-					year:queryYear,
-					category: $scope.showCategoryName});
-
-			};
-			$scope.getMonthlyExpenses = function(queryMonth,queryYear) {
-
-				$scope.expenses = expensesTable.query({month: queryMonth,
-					year:queryYear,
-					category: $scope.showCategoryName});
-
-			};
-			$scope.getYearlyExpenses = function(queryYear) {
-
-				$scope.expenses = expensesTable.query({year:queryYear, category: $scope.showCategoryName });
-
-			};
-			$scope.getTotal = function(){
-				for(var i = 0; i < $scope.expenses.length; i++){
-					$scope.total += Number($scope.expenses[i].get('amount'));
-
-				}
-			};
-
-			$scope.getExpenses = function(){
-				$scope.total = 0;
-				if($scope.showExpensesBy === "Daily"){
-					$scope.buttonsState.showDateField = true;
-					$scope.buttonsState.showMonthField = true;
-					$scope.getDailyExpenses(Number($scope.currentDate),Number($scope.currentMonth),Number($scope.currentYear));
-					$scope.getTotal();
-
-				}
-				else if($scope.showExpensesBy === "Monthly"){
-					$scope.buttonsState.showDateField = false;
-					$scope.buttonsState.showMonthField = true;
-
-					$scope.getMonthlyExpenses(Number($scope.currentMonth),Number($scope.currentYear));
-					$scope.getTotal();
-
-				}
-				else if($scope.showExpensesBy === "Yearly"){
-					$scope.buttonsState.showDateField = false;
-					$scope.buttonsState.showMonthField = false;
-					$scope.getYearlyExpenses(Number($scope.currentYear));
-					$scope.getTotal();
-
-				}
-
-			};
+		};
 
 
 
-			$scope.delete = function(expense){
-				expense.deleteRecord();
-			}
+		$scope.delete = function(expense){
+			expense.deleteRecord();
+		}
 
-			$scope.open = function (editExpense) {
-				$log.info(editExpense);
-				var modalInstance = $modal.open({
-					templateUrl: 'editExpenseModal.html',
-					controller: 'EditExpenseModalController',
-					size: 'lg'
-				});
-				modalInstance.expenseToEdit = editExpense;
-			};
+		$scope.open = function (editExpense) {
+			$log.info(editExpense);
+			var modalInstance = $modal.open({
+				templateUrl: 'editExpenseModal.html',
+				controller: 'EditExpenseModalController',
+				size: 'lg'
+			});
+			modalInstance.expenseToEdit = editExpense;
+		};
 
-		});
+	});
 
 	/*----------------------------------------------------------*/
 	app.controller('showExpensesByTagsController', function($scope, $modal, $log){
@@ -568,15 +442,15 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
 		$scope.tagCloud = [];
 
 
-		// var allTags = $scope.datastore.getTable('tags').query();
-		// for (var i=0; i < allTags.length; i++) {
-		// 	$scope.tags.push(allTags[i].get('name'));
-		// 	var tagCloudObject = {};
-		// 	tagCloudObject.text = allTags[i].get('name');
-		// 	tagCloudObject.weight = 10;
-		// 	$scope.tagCloud.push(tagCloudObject);
+		var allTags = $scope.datastore.getTable('tags').query();
+		for (var i=0; i < allTags.length; i++) {
+			$scope.tags.push(allTags[i].get('name'));
+			var tagCloudObject = {};
+			tagCloudObject.text = allTags[i].get('name');
+			tagCloudObject.weight = 10;
+			$scope.tagCloud.push(tagCloudObject);
 
-		// }
+		}
 		$('#tagCloud').jQCloud($scope.tagCloud, {
 			width: 500,
 			height: 350
@@ -615,144 +489,144 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
 
 	});
 
-		/*----------------------------------------------------------*/
-		app.controller('EditExpenseModalController', function($scope, $modalInstance){
+	/*----------------------------------------------------------*/
+	app.controller('EditExpenseModalController', function($scope, $modalInstance){
 
-			$scope.currentExpense = $modalInstance.expenseToEdit;
-			$scope.editExpenseAmount = $scope.currentExpense.get('amount');
-			$scope.editExpenseCategory = $scope.currentExpense.get('category');
-			//Tag Handler
-			$scope.thisExpenseTags = $scope.currentExpense.get('tags').toArray();
-			$scope.allTags = [];
-			var tagsRecords = $scope.datastore.getTable('tags').query();
-			for (var i=0; i < tagsRecords.length; i++) {
-				$scope.allTags.push(tagsRecords[i].get('name'));
-			}
-			$("#edit_expense_tag_handler").tagHandler({
-				assignedTags: $scope.thisExpenseTags,
-				availableTags: $scope.allTags,
-				onAdd: function(tag) {$scope.thisExpenseTags.push(tag);$scope.$apply();},
-				onDelete: function(tag) {$scope.thisExpenseTags.pop(tag);$scope.$apply();},
-				autocomplete: true
-			});
-
-			$scope.saveEditExpense = function () {
-				if($scope.currentExpense.get('amount') != $scope.editExpenseAmount){
-					$scope.currentExpense.set('amount',$scope.editExpenseAmount);
-				}
-				if($scope.currentExpense.get('category') != $scope.editExpenseCategory){
-					$scope.currentExpense.set('category',$scope.editExpenseCategory);
-				}
-				//Edit Date
-				if($scope.currentExpense.get('date') != $scope.dt.getDate()){
-					$scope.currentExpense.set('date',$scope.dt.getDate());
-				}
-				if($scope.currentExpense.get('month') != $scope.dt.getMonth()){
-					$scope.currentExpense.set('month',$scope.dt.getMonth());
-				}
-				if($scope.currentExpense.get('year') != $scope.dt.getFullYear()){
-					$scope.currentExpense.set('year',$scope.dt.getFullYear());
-				}
-
-				$modalInstance.close();
-			};
-
-			$scope.cancel = function () {
-				$modalInstance.dismiss('cancel');
-			};
-
-
-
-
-			//Date picker
-			$scope.open = function($event) {
-				$event.preventDefault();
-				$event.stopPropagation();
-			$scope.opened = true;
-			};
-			$scope.dt = new Date($scope.currentExpense.get('year'),$scope.currentExpense.get('month'),$scope.currentExpense.get('date')).toDateString();
-			$scope.dateOptions = {
-				formatYear: 'yy',
-				startingDay: 1
-			};
-
-			$scope.today = function() {
-				$scope.dt = new Date().toDateString();
-			};
-
-
-			$scope.clear = function () {
-				$scope.dt = null;
-			};
-
-
-
-
+		$scope.currentExpense = $modalInstance.expenseToEdit;
+		$scope.editExpenseAmount = $scope.currentExpense.get('amount');
+		$scope.editExpenseCategory = $scope.currentExpense.get('category');
+		//Tag Handler
+		$scope.thisExpenseTags = $scope.currentExpense.get('tags').toArray();
+		$scope.allTags = [];
+		var tagsRecords = $scope.datastore.getTable('tags').query();
+		for (var i=0; i < tagsRecords.length; i++) {
+			$scope.allTags.push(tagsRecords[i].get('name'));
+		}
+		$("#edit_expense_tag_handler").tagHandler({
+			assignedTags: $scope.thisExpenseTags,
+			availableTags: $scope.allTags,
+			onAdd: function(tag) {$scope.thisExpenseTags.push(tag);$scope.$apply();},
+			onDelete: function(tag) {$scope.thisExpenseTags.pop(tag);$scope.$apply();},
+			autocomplete: true
 		});
 
+		$scope.saveEditExpense = function () {
+			if($scope.currentExpense.get('amount') != $scope.editExpenseAmount){
+				$scope.currentExpense.set('amount',$scope.editExpenseAmount);
+			}
+			if($scope.currentExpense.get('category') != $scope.editExpenseCategory){
+				$scope.currentExpense.set('category',$scope.editExpenseCategory);
+			}
+			//Edit Date
+			if($scope.currentExpense.get('date') != $scope.dt.getDate()){
+				$scope.currentExpense.set('date',$scope.dt.getDate());
+			}
+			if($scope.currentExpense.get('month') != $scope.dt.getMonth()){
+				$scope.currentExpense.set('month',$scope.dt.getMonth());
+			}
+			if($scope.currentExpense.get('year') != $scope.dt.getFullYear()){
+				$scope.currentExpense.set('year',$scope.dt.getFullYear());
+			}
 
-		/*----------------------------------------------------------*/
-		app.controller('showGraphsController', function($scope){
+			$modalInstance.close();
+		};
 
-			$scope.today = new Date();
-			$scope.currentDate = $scope.today.getDate();
-			$scope.currentMonth = $scope.today.getMonth();
-			$scope.currentYear = $scope.today.getFullYear();
-			var queryMonth = $scope.currentMonth;
-			var queryYear = $scope.currentYear;
-			console.log("query month and year");
-			console.log(queryMonth);
-			console.log(queryYear);
-			var expensesForMonth = function(queryMonth,queryYear){
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
+
+
+
+
+		//Date picker
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+			$scope.opened = true;
+		};
+		$scope.dt = new Date($scope.currentExpense.get('year'),$scope.currentExpense.get('month'),$scope.currentExpense.get('date')).toDateString();
+		$scope.dateOptions = {
+			formatYear: 'yy',
+			startingDay: 1
+		};
+
+		$scope.today = function() {
+			$scope.dt = new Date().toDateString();
+		};
+
+
+		$scope.clear = function () {
+			$scope.dt = null;
+		};
+
+
+
+
+	});
+
+
+	/*----------------------------------------------------------*/
+	app.controller('showGraphsController', function($scope){
+
+		$scope.today = new Date();
+		$scope.currentDate = $scope.today.getDate();
+		$scope.currentMonth = $scope.today.getMonth();
+		$scope.currentYear = $scope.today.getFullYear();
+		var queryMonth = $scope.currentMonth;
+		var queryYear = $scope.currentYear;
+		console.log("query month and year");
+		console.log(queryMonth);
+		console.log(queryYear);
+		var expensesForMonth = function(queryMonth,queryYear){
 
 			return $scope.datastore.getTable('expenses').query({month : queryMonth, year : queryYear });
-			}
-			var expensesForDay = function(queryDate,queryMonth,queryYear){
+		}
+		var expensesForDay = function(queryDate,queryMonth,queryYear){
 
 			return $scope.datastore.getTable('expenses').query({date: queryDate, month : queryMonth, year : queryYear });
 
-			}
-			var chartYValues = [];
-			var chartXValues = [];
-			$scope.total = {};
-			var monthlyTotal = 0;
-			//Populate
-			for(var i=1; i <= 31; i++){
-				var amount = 0;
-				var dailyExpenses = expensesForDay(i,queryMonth,queryYear);
-				for(var j=0; j < dailyExpenses.length; j++){
-					amount += Number(dailyExpenses[j].get('amount'));
+		}
+		var chartYValues = [];
+		var chartXValues = [];
+		$scope.total = {};
+		var monthlyTotal = 0;
+		//Populate
+		for(var i=1; i <= 31; i++){
+			var amount = 0;
+			var dailyExpenses = expensesForDay(i,queryMonth,queryYear);
+			for(var j=0; j < dailyExpenses.length; j++){
+				amount += Number(dailyExpenses[j].get('amount'));
 
-				}
-				chartXValues.push(i);
-				chartYValues.push(amount);
-				monthlyTotal += amount;
 			}
-			$scope.total.monthly = monthlyTotal;
-			$scope.$apply();
+			chartXValues.push(i);
+			chartYValues.push(amount);
+			monthlyTotal += amount;
+		}
+		$scope.total.monthly = monthlyTotal;
+		$scope.$apply();
 
-			//Show Chart
-			$('#dailyChart').highcharts({
-				chart: {
-					type: 'column'
-				},
+		//Show Chart
+		$('#dailyChart').highcharts({
+			chart: {
+				type: 'column'
+			},
+			title: {
+				text: 'Your Expenses Summary'
+			},
+			xAxis: {
+				categories: chartXValues
+			},
+			yAxis: {
 				title: {
-					text: 'Your Expenses Summary'
-				},
-				xAxis: {
-					categories: chartXValues
-				},
-				yAxis: {
-					title: {
-						text: 'Amount'
-					}
-				},
-				series: [{
-					data: chartYValues
-				}]
-			});
-
+					text: 'Amount'
+				}
+			},
+			series: [{
+				data: chartYValues
+			}]
 		});
+
+	});
 
 	/*----------------------------------------------------------*/
 	app.controller('showGraphsByCategoriesCtrl', function($scope){
@@ -764,8 +638,8 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
 		var expensesForCategory = function(queryMonth,queryYear,queryCategory){
 
 			return $scope.datastore.getTable('expenses').query({month : queryMonth,
-																year : queryYear,
-																category: queryCategory
+				year : queryYear,
+				category: queryCategory
 			});
 		}
 
@@ -856,7 +730,6 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
 
 
 
-
 		//Show Chart
 		$('#tagChart').highcharts({
 			chart: {
@@ -886,144 +759,140 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
 			}]
 		});
 
+	});
+
+	/*----------------------------------------------------------*/
+	app.controller('addExpenseController', function($scope,$timeout){
+		$scope.isExpenseAdded = false;
+		$scope.thisExpenseTags = ["dummytag1","dummytag2"];
+		$scope.allTags = [];
+		$scope.categories = [];
+		//var tagsRecords = $scope.datastore.getTable('tags').query();
+		//var allCategories = $scope.datastore.getTable('categories').query();
+		//for (var i=0; i < allCategories.length; i++) {
+		//	$scope.categories.push(allCategories[i].get('name'));
+		//}
+		//var getTags = function(){
+		//	for (var i=0; i < tagsRecords.length; i++) {
+		//		$scope.allTags.push(tagsRecords[i].get('name'));
+		//	}
+		//};
+		//getTags();
+		//$("#expense_tag_handler").tagHandler({
+		//	availableTags: $scope.allTags,
+		//	onAdd: function(tag) {$scope.thisExpenseTags.push(tag);$scope.$apply();},
+		//	onDelete: function(tag) {$scope.thisExpenseTags.pop(tag);$scope.$apply();},
+		//	autocomplete: true
+		//});
+
+
+
+
+		$scope.addExpense = function(){
+			console.log("Add expense called");
+			var Expenses = Nimbus.Model.setup("Expenses",["amount","category","day","month","year","tags"]);
+			// Add expense to expenses Nimbus Model
+			Expenses.create({"amount" : $scope.expenseAmount,
+				"category" : $scope.expenseCategory,
+				"date": $scope.dt.getDate(),
+				"month": $scope.dt.getMonth(),
+				"year": $scope.dt.getFullYear(),
+				"tags": $scope.thisExpenseTags});
+
+				console.log("expense saved succesfully");
+
+			// Add new tags to tags table
+			//var tagsTable = store.getTable('tags');
+			//Update tags List with latest
+			//getTags();
+			//$scope.newTags = _.difference($scope.thisExpenseTags, $scope.allTags);
+			//var insertTags = $scope.newTags;
+			//for (var i=0; i < insertTags.length; i++) {
+			//	tagsTable.insert({
+			//		name: insertTags[i]
+			//	});
+			//}
+			$scope.isExpenseAdded = true;
+			$timeout(function(){
+				$scope.isExpenseAdded = false;
+				$scope.$apply();
+			},2000);
+
+
+		};
+
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+
+			$scope.opened = true;
+		};
+
+		$scope.dateOptions = {
+			formatYear: 'yy',
+			startingDay: 1
+		};
+
+		$scope.today = function() {
+			$scope.dt = new Date().toDateString();
+		};
+		$scope.today();
+
+		$scope.clear = function () {
+			$scope.dt = null;
+		};
+
+
+	});
+	/*----------------------------------------------------------*/
+	app.controller('welcomeController', function($scope){
+		//Required for angular routing even though its empty
+	});
+	/*----------------------------------------------------------*/
+	app.controller('resetController', function($scope) {
+		$scope.deleteData = function(){
+			$scope.myClient.getDatastoreManager().deleteDatastore($scope.datastore.getId(), function (error) {
+				if (error) {
+					alert('Sorry please try after sometime error: ' + error);
+				} else {
+					alert('Success, your data is gone');
+				}
+
+			});
+		};
 
 	});
 
-		/*----------------------------------------------------------*/
-		app.controller('addExpenseController', function($scope,$timeout){
-			$scope.isExpenseAdded = false;
-			$scope.thisExpenseTags = [];
-			$scope.allTags = [];
-			$scope.categories = [];
-			var tagsRecords = $scope.datastore.getTable('tags').query();
-			var allCategories = $scope.datastore.getTable('categories').query();
-			for (var i=0; i < allCategories.length; i++) {
-				$scope.categories.push(allCategories[i].get('name'));
-			}
-			var getTags = function(){
-				for (var i=0; i < tagsRecords.length; i++) {
-					$scope.allTags.push(tagsRecords[i].get('name'));
-				}
-			};
-			getTags();
-			$("#expense_tag_handler").tagHandler({
-				availableTags: $scope.allTags,
-				onAdd: function(tag) {$scope.thisExpenseTags.push(tag);$scope.$apply();},
-				onDelete: function(tag) {$scope.thisExpenseTags.pop(tag);$scope.$apply();},
-				autocomplete: true
-			});
-
-
-
-
-			$scope.addExpense = function(){
-				console.log("Add expense called");
-				var store = $scope.datastore;
-				var expensesTable = store.getTable('expenses');
-				// Add expense to expenses table
-				var newExpenseRecord = expensesTable.insert({
-					amount : $scope.expenseAmount,
-					category : $scope.expenseCategory,
-					date: $scope.dt.getDate(),
-					month: $scope.dt.getMonth(),
-					year: $scope.dt.getFullYear(),
-					tags: $scope.thisExpenseTags
-
-				});
-				// Add new tags to tags table
-				var tagsTable = store.getTable('tags');
-				//Update tags List with latest
-				getTags();
-				$scope.newTags = _.difference($scope.thisExpenseTags, $scope.allTags);
-				var insertTags = $scope.newTags;
-				for (var i=0; i < insertTags.length; i++) {
-					tagsTable.insert({
-					name: insertTags[i]
-				});
-				}
-				$scope.isExpenseAdded = true;
-				$timeout(function(){
-					$scope.isExpenseAdded = false;
-					$scope.$apply();
-				},2000);
-
-
-			};
-
-			$scope.open = function($event) {
-				$event.preventDefault();
-				$event.stopPropagation();
-
-				$scope.opened = true;
-			};
-
-			$scope.dateOptions = {
-				formatYear: 'yy',
-				startingDay: 1
-			};
-
-			$scope.today = function() {
-				$scope.dt = new Date().toDateString();
-			};
-			$scope.today();
-
-			$scope.clear = function () {
-				$scope.dt = null;
-			};
-
-
-		});
-		/*----------------------------------------------------------*/
-		app.controller('welcomeController', function($scope){
-			//Required for angular routing even though its empty
-		});
-		/*----------------------------------------------------------*/
-		app.controller('resetController', function($scope) {
-			$scope.deleteData = function(){
-				$scope.myClient.getDatastoreManager().deleteDatastore($scope.datastore.getId(), function (error) {
-					if (error) {
-						alert('Sorry please try after sometime error: ' + error);
-					} else {
-						alert('Success, your data is gone');
-					}
-
-				});
-			};
-
-		});
-
-
-		
-		/*----------------------------------------------------------*/
-		app.controller('addCategoriesController', function($scope,$timeout) {
+	/*----------------------------------------------------------*/
+	app.controller('addCategoriesController', function($scope,$timeout) {
+		$scope.iconName = "";
+		$scope.isCategoryAdded = false;
+		$scope.close = function(){
 			$scope.iconName = "";
-			$scope.isCategoryAdded = false;
-			$scope.close = function(){
-				$scope.iconName = "";
-			};
-			$scope.categoryType = "Primary";
-			$scope.addNewCategory = function(){
-				var store = $scope.datastore;
-				var categoriesTable = store.getTable('categories');
-				var newCategoryRecord = {};
-				newCategoryRecord.name = $scope.categoryName;
-				newCategoryRecord.icon = $scope.iconName;
-				newCategoryRecord.type = $scope.categoryType;
-				if($scope.categoryType === 'Secondary'){
-					newCategoryRecord.primary = $scope.categoryPrimary;
-				}
-				if($scope.categoryType === 'Tertiary'){
-					newCategoryRecord.secondary = $scope.categorySecondary;
-				}
-				categoriesTable.insert(newCategoryRecord);
-				$scope.isCategoryAdded = true;
-				$timeout(function(){
-					$scope.isCategoryAdded = false;
-					$scope.$apply();
-				},2000);
-			};
+		};
+		$scope.categoryType = "Primary";
+		$scope.addNewCategory = function(){
+			var store = $scope.datastore;
+			var categoriesTable = store.getTable('categories');
+			var newCategoryRecord = {};
+			newCategoryRecord.name = $scope.categoryName;
+			newCategoryRecord.icon = $scope.iconName;
+			newCategoryRecord.type = $scope.categoryType;
+			if($scope.categoryType === 'Secondary'){
+				newCategoryRecord.primary = $scope.categoryPrimary;
+			}
+			if($scope.categoryType === 'Tertiary'){
+				newCategoryRecord.secondary = $scope.categorySecondary;
+			}
+			categoriesTable.insert(newCategoryRecord);
+			$scope.isCategoryAdded = true;
+			$timeout(function(){
+				$scope.isCategoryAdded = false;
+				$scope.$apply();
+			},2000);
+		};
 
-			$scope.icons = ["adjust",
+		$scope.icons = ["adjust",
 			"adn",
 			"align-center",
 			"align-justify",
@@ -1572,9 +1441,7 @@ app.run(['GAuth', 'GApi', '$state', '$rootScope', '$window',
 			"youtube",
 			"youtube-play",
 			"youtube-square"
-			];
-		});
-		/*----------------------------------------------------------*/
-
-
+		];
+	});
+	/*----------------------------------------------------------*/
 })();
