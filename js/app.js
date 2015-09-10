@@ -202,7 +202,8 @@
 	app.run(function($rootScope) {
 
 
-		$rootScope.isClientAuthenticated = true;
+
+		$rootScope.isClientAuthenticated = false;
 		console.log("checking Authorization");
 		if(Nimbus.Auth.authorized()){
 			$rootScope.isClientAuthenticated = true;
@@ -222,6 +223,7 @@
 		Nimbus.Auth.authorized_callback = function(){
 			console.log("Dropbox callback called");
 			$rootScope.isClientAuthenticated = true;
+			$rootScope.$apply();
 			console.log("isClientAuthenticated =" + $rootScope.isClientAuthenticated);
 		};
 		$rootScope.authorizeDropbox = function(){
