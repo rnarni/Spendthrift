@@ -203,8 +203,13 @@
 
 
 		$rootScope.isClientAuthenticated = false;
-
+		console.log("checking Authorization");
+		if(Nimbus.Auth.authorized()){
+			$rootScope.isClientAuthenticated = true;
+			console.log($rootScope.isClientAuthenticated);
+		}
 		$rootScope.authorizeDropbox = function(){
+			console.log("authorize dropbox called");
 			var sync_object = {
 				"Dropbox": {
 					"key": "o1jwubie72fvekd",
@@ -216,9 +221,26 @@
 			};
 
 			Nimbus.Auth.setup(sync_object);
-			Nimbus.Auth.authorize('Dropbox');
-			$rootScope.isClientAuthenticated = true;
+			Nimbus.Auth.authorized_callback = function(){
+				console.log("callback called")
+			};
+
+			var authPromise =  Nimbus.Auth.authorize('Dropbox');
+
+			//authPromise.promise.then(
+			//if(Nimbus.Auth.authorized()){
+			//	$rootScope.isClientAuthenticated = true;
+			//	console.log("Authenticated in promise");
+			//}
+			//);
+
+
+
+
+
 		};
+
+
 
 
 
