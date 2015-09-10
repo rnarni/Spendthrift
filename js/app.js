@@ -208,42 +208,27 @@
 			$rootScope.isClientAuthenticated = true;
 			console.log($rootScope.isClientAuthenticated);
 		}
-		$rootScope.authorizeDropbox = function(){
-			console.log("authorize dropbox called");
-			var sync_object = {
-				"Dropbox": {
-					"key": "o1jwubie72fvekd",
-					"secret": "sogx0h9t09dcmw4",
-					"app_name": "SpendThrift"
-				},
 
-				"synchronous" : false
-			};
-
-			Nimbus.Auth.setup(sync_object);
-			Nimbus.Auth.authorized_callback = function(){
-				console.log("callback called")
-			};
-
-			var authPromise =  Nimbus.Auth.authorize('Dropbox');
-			
-
-			// authPromise.then(
-			// if(Nimbus.Auth.authorized()){
-			// 	$rootScope.isClientAuthenticated = true;
-			// 	console.log("Authenticated in promise");
-			// }
-			// );
-
-
-
-
-
+		var sync_object = {
+			"Dropbox": {
+				"key": "o1jwubie72fvekd",
+				"secret": "sogx0h9t09dcmw4",
+				"app_name": "SpendThrift"
+			},
+			"synchronous" : false
 		};
 
+		Nimbus.Auth.setup(sync_object);
+		Nimbus.Auth.authorized_callback = function(){
+			console.log("Dropbox callback called");
+			$rootScope.isClientAuthenticated = true;
+			console.log("isClientAuthenticated =" + $rootScope.isClientAuthenticated);
+		};
+		$rootScope.authorizeDropbox = function(){
 
+			Nimbus.Auth.authorize('Dropbox');
 
-
+		};
 
 
 
