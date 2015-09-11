@@ -10,14 +10,18 @@
 
 		$routeProvider
 
-			// .when('/',{
-			// 	templateUrl : 'welcome.html',
-			// 	controller : 'welcomeController'
-			// })
-
-			// route for the categories page
 			.when('/addCategories', {
-				templateUrl : 'addCategories.html'
+				templateUrl : 'templates/addCategories.html',
+				controller: 'addCategoriesController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},2000);
+						return defer.promise;
+					}
+				}
 			})
 
 			.when('/addExpense', {
@@ -877,24 +881,33 @@
 	app.controller('addCategoriesController', function($scope,$timeout) {
 		$scope.iconName = "";
 		$scope.isCategoryAdded = false;
+		$scope.categoryPrimary = null;
+		$scope.categorySecondary = null;
 		$scope.close = function(){
 			$scope.iconName = "";
 		};
 		$scope.categoryType = "Primary";
 		$scope.addNewCategory = function(){
-			var store = $scope.datastore;
-			var categoriesTable = store.getTable('categories');
-			var newCategoryRecord = {};
-			newCategoryRecord.name = $scope.categoryName;
-			newCategoryRecord.icon = $scope.iconName;
-			newCategoryRecord.type = $scope.categoryType;
-			if($scope.categoryType === 'Secondary'){
-				newCategoryRecord.primary = $scope.categoryPrimary;
-			}
-			if($scope.categoryType === 'Tertiary'){
-				newCategoryRecord.secondary = $scope.categorySecondary;
-			}
-			categoriesTable.insert(newCategoryRecord);
+		console.log("Add category called");
+        var Categories = Nimbus.Model.setup("Categories", ["categoryName", "iconName", "categoryType", "categoryPrimary", "categorySecondary"]);
+		//Add Categories to categories Nimbus Model
+        Categories.create({"categoryName" : $scope.categoryName,
+            	"iconName" : $scope.iconName,
+            	"categoryType" : $scope.categoryType,
+            	"categoryPrimary" : $scope.categoryPrimary,
+                "categorySecondary" : $scope.categorySecondary});
+
+			// newCategoryRecord.name = $scope.categoryName;
+			// newCategoryRecord.icon = $scope.iconName;
+			// newCategoryRecord.type = $scope.categoryType;
+			// if($scope.categoryType === 'Secondary'){
+			// 	newCategoryRecord.primary = $scope.categoryPrimary;
+			// }
+			// if($scope.categoryType === 'Tertiary'){
+			// 	newCategoryRecord.secondary = $scope.categorySecondary;
+			// }
+			
+			console.log("add category saved succesfully");
 			$scope.isCategoryAdded = true;
 			$timeout(function(){
 				$scope.isCategoryAdded = false;
