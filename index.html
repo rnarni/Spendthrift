@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+   <!DOCTYPE html>
 <html lang="en" ng-app="spendThrift">
 
 <head>
@@ -73,21 +74,24 @@
                 <div id="wrapper">
                         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                             <!-- Brand and toggle get grouped for better mobile display -->
-                            <div class="navbar-header">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <div  class="navbar-header">
+                                <button  ng-show="isClientAuthenticated" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                                     <span class="sr-only">Toggle navigation</span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                 </button>
                                 <a class="navbar-brand" href="index.html">SpendThrift</a>
+                                 <a  ng-show="!isClientAuthenticated" class="nav navbar-right navbar-brand loginButton hidden-sm hidden-md hidden-lg" style="float:right"  ng-click="authorizeDropbox()"  href="" role="button"><i class="fa fa-dropbox"></i>Login with Dropbox</a>
+                                 
                             </div>
                             <!-- Top Menu Items -->
-                            <ul class="nav navbar-right top-nav hidden-xs">
-                                <li>
-                                <a  class="loginButton" ng-click="authorizeDropbox()"  href="" role="button"><i class="fa fa-dropbox"></i>Login with Dropbox</a>
-                                </li>
-                            </ul>
+                            <!-- <ul class="nav navbar-right top-nav hidden-xs">
+                                <li> -->
+                                <a  ng-show="!isClientAuthenticated" class="nav navbar-right navbar-brand loginButton hidden-xs"  ng-click="authorizeDropbox()"  href="" role="button"><i class="fa fa-dropbox"></i>Login with Dropbox</a>
+                                 <a  ng-show="isClientAuthenticated" class="nav navbar-right navbar-brand loginButton hidden-xs"  ng-click="doLogout()"  href="" role="button"><i class="fa fa-dropbox"></i>logout</a>
+                             <!--    </li>
+                            </ul> -->
                             <!-- Top Menu removed-->
 
                             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -149,7 +153,7 @@
                                         </ul>
                                     </li>
                                     <li class='visible-xs'>
-                                             <button type="button" class="loginButton"id="connectGoogle"><i class="fa fa-user"></i>  Login</button>
+                                             <button type="button" ng-click="doLogout()" class="loginButton"id="connectGoogle"><i class="fa fa-user"></i>  logout</button>
                                        
                                     </li>
                                    

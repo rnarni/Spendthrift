@@ -1,5 +1,5 @@
 (function(){
-	var app = angular.module('spendThrift',['ngRoute','ui.bootstrap','ngTouch','ngAnimate']);
+	var app = angular.module('spendThrift',['ngRoute','ui.bootstrap','ngTouch']);
 
 
 
@@ -21,6 +21,7 @@
 			})
 
 			.when('/addExpense', {
+				url:'/addExpense/kala',
 				templateUrl : 'templates/addExpense.html',
 				controller: 'addExpenseController',
 				resolve: {
@@ -205,12 +206,18 @@
 
 		$rootScope.isClientAuthenticated = false;
 		console.log("checking Authorization");
-		if(Nimbus.Auth.authorized()){
-			$rootScope.isClientAuthenticated = true;
-			console.log($rootScope.isClientAuthenticated);
-		}
+		// if(Nimbus.Auth.authorized()){
+		// 	$rootScope.isClientAuthenticated = true;
+		// 	console.log($rootScope.isClientAuthenticated);
+		// }
 
 		var sync_object = {
+			 // "GDrive": {
+			 //    "key": "590649366996-qddfiv288dts3vpgn3b5j9ieqsug1mjh.apps.googleusercontent.com",
+			 //    "app_id": "spendthrift-1065",
+			 //    "scope": "https://www.googleapis.com/auth/drive"
+			 //  },
+  			// "app_name": "Spendthrift",
 			"Dropbox": {
 				"key": "o1jwubie72fvekd",
 				"secret": "sogx0h9t09dcmw4",
@@ -231,6 +238,12 @@
 			Nimbus.Auth.authorize('Dropbox');
 
 		};
+		$rootScope.doLogout=function(){
+			$rootScope.isClientAuthenticated = false;
+			window.localStorage.removeItem('oauth_token');
+			window.localStorage.removeItem('oauth_token_secret');
+			window.localStorage.removeItem('last_sync_object');
+		}
 
 
 
