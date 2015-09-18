@@ -38,6 +38,19 @@
 					}
 				}
 			})
+			.when('/addIncome', {
+				templateUrl : 'templates/addIncome.html',
+				controller: 'addIncomeController',
+				resolve: {
+					app: function($q, $timeout) {
+						var defer = $q.defer();
+						$timeout(function(){
+							defer.resolve();
+						},2000);
+						return defer.promise;
+					}
+				}
+			})
 
 			.when('/showCategories', {
 				templateUrl : 'templates/showCategories.html',
@@ -842,6 +855,70 @@
 			$scope.isExpenseAdded = true;
 			$timeout(function(){
 				$scope.isExpenseAdded = false;
+				$scope.$apply();
+			},2000);
+
+
+		};
+
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+
+			$scope.opened = true;
+		};
+
+		$scope.dateOptions = {
+			formatYear: 'yy',
+			startingDay: 1
+		};
+
+		$scope.today = function() {
+			$scope.dt = new Date().toDateString();
+		};
+		$scope.today();
+
+		$scope.clear = function () {
+			$scope.dt = null;
+		};
+
+
+	});
+
+	/*----------------------------------------------------------*/
+	app.controller('addIncomeController', function($scope,$timeout){
+		$scope.isExpenseAdded = false;
+		$scope.thisIncomeTags = ["dummytag1","dummytag2"];
+		$scope.allTags = [];
+		$scope.categories = [];
+
+
+		$scope.addIncome = function(){
+			console.log("Add income called");
+			var Income = Nimbus.Model.setup("Income",["amount","source","day","month","year"]);
+			// Add Income to Income Nimbus Model
+			Income.create({"amount" : $scope.Amount,
+				"source" : $scope.source,
+				"day": $scope.dt.getDate(),
+				"month": $scope.dt.getMonth(),
+				"year": $scope.dt.getFullYear()});
+
+			console.log("Income saved succesfully");
+
+			// Add new tags to tags table
+			//var tagsTable = store.getTable('tags');
+			//Update tags List with latest
+			//getTags();
+			//$scope.newTags = _.difference($scope.thisExpenseTags, $scope.allTags);
+			//var insertTags = $scope.newTags;
+			//for (var i=0; i < insertTags.length; i++) {
+			//	tagsTable.insert({
+			//		name: insertTags[i]
+			//	});
+			//}
+			$scope.isIncomeAdded = true;
+			$timeout(function(){
+				$scope.isIncomeAdded = false;
 				$scope.$apply();
 			},2000);
 
