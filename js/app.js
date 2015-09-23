@@ -307,31 +307,39 @@
 		$scope.currentDate = $scope.today.getDate();
 		$scope.currentMonth = $scope.today.getMonth();
 		$scope.currentYear = $scope.today.getFullYear();
-		var store = $scope.datastore;
-		var expensesTable = store.getTable('expenses');
+		// var store = $scope.datastore;
+		// var expensesTable = store.getTable('expenses');
+		var Expenses = Nimbus.Model.setup("Expenses",["amount","category","day","month","year","tags"]);
+
 		$scope.getDailyExpenses = function(queryDate,queryMonth,queryYear) {
 
-			$scope.expenses = expensesTable.query({date:queryDate,
-				month: queryMonth,
-				year:queryYear });
+          $scope.expenses = Expenses.findAllByAttribute("day", ""+queryDate);
+          //$scope.expenses = Expenses.all();
+          console.log(queryDate);
+          console.log($scope.expenses);
+			// $scope.expenses = expensesTable.query({date:queryDate,
+			// 	month: queryMonth,
+			// 	year:queryYear });
 
 		};
 		$scope.getMonthlyExpenses = function(queryMonth,queryYear) {
-
-			$scope.expenses = expensesTable.query({month: queryMonth,
-				year:queryYear });
+        $scope.expenses = Expenses.findAllByAttribute("month", ""+queryMonth);
+			// $scope.expenses = expensesTable.query({month: queryMonth,
+			// 	year:queryYear });
 
 		};
 		$scope.getYearlyExpenses = function(queryYear) {
 
-			$scope.expenses = expensesTable.query({year:queryYear });
+			// 
+			 $scope.expenses = Expenses.findAllByAttribute("year", queryYear);
 
 		};
 		$scope.getTotal = function(){
-			for(var i = 0; i < $scope.expenses.length; i++){
-				$scope.total += Number($scope.expenses[i].get('amount'));
+			// for(var i = 0; i < $scope.expenses.length; i++){
+			// 	$scope.total += Number($scope.expenses[i].get('amount'));
 
-			}
+			// }
+			return 0;
 		};
 
 		$scope.getExpenses = function(){
@@ -362,7 +370,7 @@
 		};
 
 		$scope.getDailyExpenses($scope.currentDate,$scope.currentMonth,$scope.currentYear);
-		$scope.getTotal();
+		//$scope.getTotal();
 
 
 
@@ -837,8 +845,7 @@
 			// Add expense to expenses Nimbus Model
 			Expenses.create({"amount" : $scope.expenseAmount,
 				"category" : $scope.expenseCategory,
-				"date": $scope.dt.getDate(),
-				"month": $scope.dt.getMonth(),
+				"day": $scope.dt.getDate(),
 				"year": $scope.dt.getFullYear(),
 				"tags": $scope.thisExpenseTags});
 
