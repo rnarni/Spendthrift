@@ -262,6 +262,9 @@
 			window.localStorage.removeItem('last_sync_object');
 		}
 
+		$('.side-nav>li>a').click(function(event){
+			 $('ul .in').collapse("hide");	
+		});
 
 
 	});
