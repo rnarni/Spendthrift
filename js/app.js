@@ -896,7 +896,7 @@
 		$scope.categories = [];
 
 
-		$scope.addIncome = function(){
+		$scope.addIncome = function(isValid){
 			console.log("Add income called");
 			var Income = Nimbus.Model.setup("Income",["amount","source","day","month","year"]);
 			// Add Income to Income Nimbus Model

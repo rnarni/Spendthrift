@@ -1,13 +1,15 @@
 <div ng-controller="addIncomeController">
     <h1>Add an Income</h1>
-    <form ng-show="isClientAuthenticated"  role="form">
+    <form name='incomeForm' ng-show="isClientAuthenticated" ng-submit="addIncome()" role="form" novalidate>
         <div class="form-group">
             <label for="">Amount</label>
-            <input ng-model="Amount" class="form-control"  placeholder="Enter Amount">
+            <input ng-model="Amount" class="form-control" name='Amount' placeholder="Enter Amount" required>
+            <p ng-show="incomeForm.Amount.$invalid && !incomeForm.amount.$pristine" class="validationError">Income Amount is required.</p>
         </div>
         <div class="form-group">
             <label for="">Source</label>
-            <input ng-model="source" typeahead="category for category in categories | filter:$viewValue | limitTo:8" class="form-control"  placeholder="Source">
+            <input ng-model="source" name="source" typeahead="category for category in categories | filter:$viewValue | limitTo:8" class="form-control"  placeholder="Source">
+             
         </div>
         <div class="form-group">
             <p class="input-group">
@@ -27,7 +29,7 @@
 
 
         <div ng-show="isIncomeAdded" class="alert alert-success" role="alert">Success, your income is saved</div>
-        <button ng-click="addIncome()" type="submit" class="btn btn-default">Save Income</button>
+        <button type="submit" class="btn btn-default" ng-disabled="incomeForm.Amount.$invalid" >Save Income</button>
     </form>
 
 </div>

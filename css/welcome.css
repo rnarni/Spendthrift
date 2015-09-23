@@ -90,6 +90,10 @@ p {
     .navbar-toggle  .icon-bar{
         background-color: white !important;
     }
+     .validationError{
+        font-size: 15px;
+        color:red;
+    }
 
 
 
@@ -186,6 +190,10 @@ p {
     padding: 15px 15px;
     font-size: 15px !important;
     line-height: 20px !important;
+    }
+    .validationError{
+        font-size: 15px;
+        color:red;
     }
  
 
