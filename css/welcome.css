@@ -94,6 +94,12 @@ p {
         font-size: 15px;
         color:red;
     }
+    .has-error{
+        color:red;
+    }
+    ..has-error label{
+        color:black;
+    }
 
 
 
