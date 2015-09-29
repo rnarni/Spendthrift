@@ -115,7 +115,7 @@ p {
     #page-wrapper {
         padding: 10px;
         padding-left: 225px;
-        /*background-color: white;*/
+       
     }
 
 
@@ -129,7 +129,7 @@ p {
         border: none;
         border-radius: 0;
         overflow-y: auto;
-        background-color: #222;
+        background-color: #3E3E3E;
         bottom: 0;
         overflow-x: hidden;
         padding-bottom: 40px;
