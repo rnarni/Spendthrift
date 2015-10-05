@@ -1,6 +1,6 @@
 <div ng-controller="addIncomeController">
-    <h1>Add an Income</h1>
-    <form name='incomeForm' ng-show="isClientAuthenticated" ng-submit="addIncome()" role="form" novalidate>
+    <h1 style = "color:#fff;">Add an Income</h1>
+    <form name='incomeForm' ng-show="isClientAuthenticated" ng-submit="addIncome()" role="form" novalidate style ="color: #fff;background-color: #CABA33; padding:10px">
         <div class="form-group" ng-class="{ 'has-error' : incomeForm.Amount.$invalid && !incomeForm.Amount.$pristine }">
             <label for="">Amount</label>
             <input ng-model="Amount" class="form-control" name='Amount' placeholder="Enter Amount" ng-pattern="/^[0-9]{1,7}$/" required>
